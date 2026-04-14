@@ -170,19 +170,19 @@ export default function Home() {
                 /skills
               </div>
               <h3 className="mt-4 font-display text-4xl sm:text-6xl tracking-tight font-medium max-w-3xl">
-                Grab the first skill.{" "}
-                <span className="italic text-bone-dim">Free.</span>
+                Real Claude skills.{" "}
+                <span className="italic text-bone-dim">Drop them in.</span>
               </h3>
               <p className="mt-6 max-w-xl text-bone-dim text-lg">
-                An AI website business skill that researches local businesses, builds
-                them a full site, deploys it, and logs the lead — all in one
-                shot.
+                Agents, automations, and workflows — packaged as Claude
+                skills you can install and run on day one. New ones drop
+                whenever I build something worth sharing.
               </p>
               <Link
                 href="/skills"
                 className="mt-10 inline-flex items-center gap-2 rounded-full bg-acid text-ink px-6 py-4 text-[15px] font-semibold hover:bg-bone transition-all group"
               >
-                Unlock it
+                Browse the skills
                 <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
