@@ -48,9 +48,8 @@ export default function SkillsPage() {
             className="rise mt-6 max-w-2xl text-lg sm:text-xl text-bone-dim leading-relaxed"
             style={{ animationDelay: "120ms" }}
           >
-            Real systems you can drop into Claude today. No prompts to copy —
-            just install the skill and go. New ones ship whenever I build
-            something worth sharing.
+            Real systems you can drop into Claude today. New ones ship
+            whenever I build something worth sharing.
           </p>
           <div
             className="rise mt-8 inline-flex items-center gap-3 text-[11px] font-mono uppercase tracking-widest text-bone-dim"
