@@ -45,12 +45,10 @@ export default function Home() {
 
           {/* Headline */}
           <h1
-            className="rise font-display mt-8 text-[46px] leading-[0.95] sm:text-[80px] sm:leading-[0.92] lg:text-[112px] tracking-[-0.035em] font-medium"
+            className="rise font-display mt-8 text-[56px] leading-[0.92] sm:text-[104px] sm:leading-[0.9] lg:text-[136px] tracking-[-0.035em] font-medium"
             style={{ animationDelay: "80ms" }}
           >
-            Learn to build
-            <br />
-            <span className="italic font-light">real AI systems</span>
+            <span className="italic font-light">Real AI systems</span>
             <br />
             <span className="inline-flex items-baseline gap-3">
               with{" "}
