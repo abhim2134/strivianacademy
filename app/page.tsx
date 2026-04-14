@@ -2,12 +2,8 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Socials } from "@/components/Socials";
-import { SKILLS } from "@/lib/skills";
 
 export default function Home() {
-  const shippedCount = SKILLS.filter((s) => s.available).length;
-  const shippedLabel = String(shippedCount).padStart(2, "0");
-
   return (
     <div className="grain relative">
       <Nav />
@@ -85,8 +81,8 @@ export default function Home() {
             style={{ animationDelay: "420ms" }}
           >
             {[
-              { n: shippedLabel, l: "Skills shipped" },
-              { n: "0", l: "Prompts to copy" },
+              { n: "Free", l: "To install" },
+              { n: "Day 1", l: "Usable" },
               { n: "∞", l: "Things to build" },
             ].map((s) => (
               <div key={s.l} className="border-l hairline pl-4">
