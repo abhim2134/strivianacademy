@@ -47,18 +47,16 @@ export default function Home() {
 
           {/* Headline */}
           <h1
-            className="rise font-display mt-8 text-[56px] leading-[0.92] sm:text-[104px] sm:leading-[0.9] lg:text-[136px] tracking-[-0.035em] font-medium"
+            className="rise font-display mt-8 text-[64px] leading-[0.92] sm:text-[120px] sm:leading-[0.9] lg:text-[160px] tracking-[-0.035em] font-medium"
             style={{ animationDelay: "80ms" }}
           >
-            <span className="italic font-light">Real AI systems</span>
-            <br />
-            <span className="inline-flex items-baseline gap-3">
-              with{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 text-ink px-3">Claude</span>
-                <span className="absolute inset-0 bg-acid -skew-x-6 rounded-sm" />
-              </span>
+            <span className="italic font-light">Real</span>{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 text-ink px-3">AI</span>
+              <span className="absolute inset-0 bg-acid -skew-x-6 rounded-sm" />
             </span>
+            <br />
+            <span className="italic font-light">systems.</span>
           </h1>
 
           {/* Subheadline */}
@@ -83,7 +81,7 @@ export default function Home() {
               href="/skills"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-acid text-ink px-6 py-4 text-[15px] font-semibold hover:bg-bone hover:text-ink transition-all"
             >
-              Get the free skills
+              Get free Claude skills
               <span className="transition-transform group-hover:translate-x-1">
                 →
               </span>
