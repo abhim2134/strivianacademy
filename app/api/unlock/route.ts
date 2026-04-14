@@ -7,7 +7,7 @@ import { buildSkillZip, readSkillFile } from "@/lib/skillFiles";
 export const runtime = "nodejs";
 
 const OWNER_EMAIL = "abhiram.mullapudi04@gmail.com";
-const FROM = "Strivian Academy <onboarding@resend.dev>";
+const FROM = "Abhi · Strivian Academy <abhi@strivianacademy.com>";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
