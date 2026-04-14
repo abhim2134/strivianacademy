@@ -14,8 +14,8 @@ export type Skill = {
 
 export const SKILLS: Skill[] = [
   {
-    id: "ai-website-builder",
-    title: "AI Website Builder",
+    id: "ai-website-business",
+    title: "AI Website Business",
     tagline: "One prompt. A full business website. Shipped.",
     description:
       "A Claude skill that researches local businesses, builds them a complete Next.js website from public signals, pushes it to GitHub, deploys it to Vercel, and logs everything to a spreadsheet — all in one shot.",

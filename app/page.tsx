@@ -175,7 +175,7 @@ export default function Home() {
                 <span className="italic text-bone-dim">Free.</span>
               </h3>
               <p className="mt-6 max-w-xl text-bone-dim text-lg">
-                An AI website builder that researches local businesses, builds
+                An AI website business skill that researches local businesses, builds
                 them a full site, deploys it, and logs the lead — all in one
                 shot.
               </p>

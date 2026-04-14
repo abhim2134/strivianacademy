@@ -151,6 +151,6 @@ function renderUserEmail(title: string, tagline: string, skillId: string) {
 
 // Debug/helper: return the skill zip size without triggering email send
 export async function GET() {
-  const zip = await buildSkillZip("ai-website-builder");
+  const zip = await buildSkillZip("ai-website-business");
   return NextResponse.json({ bytes: zip.length });
 }
