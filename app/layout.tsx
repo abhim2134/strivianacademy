@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Strivian Academy",
     description:
-      "Learn to build real AI systems with Claude. Free skills from a software engineer.",
+      "Real AI systems with Claude. Free skills from a software engineer.",
   },
 };
 

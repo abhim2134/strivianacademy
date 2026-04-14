@@ -8,6 +8,7 @@ import {
   SiTailwindcss,
   SiReact,
   SiNodedotjs,
+  SiSupabase,
 } from "@icons-pack/react-simple-icons";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -17,6 +18,7 @@ const MARQUEE_LOGOS = [
   { name: "Claude", Icon: SiClaude },
   { name: "Next.js", Icon: SiNextdotjs },
   { name: "Vercel", Icon: SiVercel },
+  { name: "Supabase", Icon: SiSupabase },
   { name: "GitHub", Icon: SiGithub },
   { name: "TypeScript", Icon: SiTypescript },
   { name: "Tailwind CSS", Icon: SiTailwindcss },
