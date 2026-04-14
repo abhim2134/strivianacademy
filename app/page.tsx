@@ -1,7 +1,28 @@
 import Link from "next/link";
+import {
+  SiClaude,
+  SiNextdotjs,
+  SiVercel,
+  SiGithub,
+  SiTypescript,
+  SiTailwindcss,
+  SiReact,
+  SiNodedotjs,
+} from "@icons-pack/react-simple-icons";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Socials } from "@/components/Socials";
+
+const MARQUEE_LOGOS = [
+  { name: "Claude", Icon: SiClaude },
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "Vercel", Icon: SiVercel },
+  { name: "GitHub", Icon: SiGithub },
+  { name: "TypeScript", Icon: SiTypescript },
+  { name: "Tailwind CSS", Icon: SiTailwindcss },
+  { name: "React", Icon: SiReact },
+  { name: "Node.js", Icon: SiNodedotjs },
+];
 
 export default function Home() {
   return (
@@ -97,23 +118,32 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Marquee */}
-        <div className="border-y hairline bg-ink-2/40 py-4 overflow-hidden">
-          <div className="marquee-track flex gap-10 whitespace-nowrap font-display text-xl sm:text-3xl tracking-tight">
+        {/* Logo strip */}
+        <div className="border-y hairline bg-ink-2/40 py-6 sm:py-8 overflow-hidden">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8 mb-5 flex items-center gap-3">
+            <span className="h-px w-8 bg-bone-dim/40" />
+            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-bone-dim">
+              Real tools · real systems · no slop
+            </span>
+          </div>
+          <div className="marquee-track flex gap-12 sm:gap-16 whitespace-nowrap items-center">
             {Array.from({ length: 2 }).map((_, i) => (
-              <div key={i} className="flex gap-10 shrink-0">
-                <span>Skills</span>
-                <span className="text-bone-dim">·</span>
-                <span className="italic">Automations</span>
-                <span className="text-bone-dim">·</span>
-                <span>Workflows</span>
-                <span className="text-bone-dim">·</span>
-                <span className="italic">Agents</span>
-                <span className="text-bone-dim">·</span>
-                <span>Systems that ship</span>
-                <span className="text-bone-dim">·</span>
-                <span className="italic">Built with Claude</span>
-                <span className="text-bone-dim">·</span>
+              <div
+                key={i}
+                className="flex gap-12 sm:gap-16 shrink-0 items-center"
+              >
+                {MARQUEE_LOGOS.map(({ name, Icon }) => (
+                  <div
+                    key={`${i}-${name}`}
+                    className="flex items-center gap-3 text-bone/70 hover:text-bone transition-colors"
+                    title={name}
+                  >
+                    <Icon className="h-7 w-7 sm:h-9 sm:w-9 shrink-0" />
+                    <span className="font-display text-lg sm:text-xl tracking-tight hidden sm:inline">
+                      {name}
+                    </span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
