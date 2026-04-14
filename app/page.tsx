@@ -5,7 +5,7 @@ import {
   SiVercel,
   SiGithub,
   SiTypescript,
-  SiTailwindcss,
+  SiStripe,
   SiReact,
   SiNodedotjs,
   SiSupabase,
@@ -19,9 +19,9 @@ const MARQUEE_LOGOS = [
   { name: "Next.js", Icon: SiNextdotjs },
   { name: "Vercel", Icon: SiVercel },
   { name: "Supabase", Icon: SiSupabase },
+  { name: "Stripe", Icon: SiStripe },
   { name: "GitHub", Icon: SiGithub },
   { name: "TypeScript", Icon: SiTypescript },
-  { name: "Tailwind CSS", Icon: SiTailwindcss },
   { name: "React", Icon: SiReact },
   { name: "Node.js", Icon: SiNodedotjs },
 ];
@@ -47,15 +47,14 @@ export default function Home() {
 
           {/* Headline */}
           <h1
-            className="rise font-display mt-8 text-[64px] leading-[0.92] sm:text-[120px] sm:leading-[0.9] lg:text-[160px] tracking-[-0.035em] font-medium"
+            className="rise font-display mt-8 text-[44px] leading-[0.92] sm:text-[76px] sm:leading-[0.9] lg:text-[108px] tracking-[-0.035em] font-medium whitespace-nowrap"
             style={{ animationDelay: "80ms" }}
           >
             <span className="italic font-light">Real</span>{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-ink px-3">AI</span>
               <span className="absolute inset-0 bg-acid -skew-x-6 rounded-sm" />
-            </span>
-            <br />
+            </span>{" "}
             <span className="italic font-light">systems.</span>
           </h1>
 
