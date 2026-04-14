@@ -39,9 +39,6 @@ export default function SkillCard({
               {skill.category}
             </span>
             <span className="font-mono text-[10px] uppercase tracking-widest text-bone-dim border hairline rounded-full px-2.5 py-1">
-              {skill.difficulty}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-bone-dim border hairline rounded-full px-2.5 py-1">
               {skill.readTime}
             </span>
             {skill.available ? (

@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="flex items-center gap-3">
           <span className="h-2 w-2 rounded-full bg-acid" />
           <span className="font-display text-sm tracking-tight">
-            Strivian Academy
+            Strivian LLC
           </span>
           <span className="text-bone-dim text-xs font-mono">
             © {new Date().getFullYear()}
