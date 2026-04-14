@@ -2,8 +2,12 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { Socials } from "@/components/Socials";
+import { SKILLS } from "@/lib/skills";
 
 export default function Home() {
+  const shippedCount = SKILLS.filter((s) => s.available).length;
+  const shippedLabel = String(shippedCount).padStart(2, "0");
+
   return (
     <div className="grain relative">
       <Nav />
@@ -81,7 +85,7 @@ export default function Home() {
             style={{ animationDelay: "420ms" }}
           >
             {[
-              { n: "100%", l: "Free" },
+              { n: shippedLabel, l: "Skills shipped" },
               { n: "0", l: "Prompts to copy" },
               { n: "∞", l: "Things to build" },
             ].map((s) => (
@@ -143,10 +147,9 @@ export default function Home() {
                 that actually work.
               </p>
               <p className="mt-8 text-base text-bone-dim leading-relaxed max-w-2xl">
-                Everything here is free. No course funnels, no $997 programs,
-                no fluff. Just the skills, agents, and workflows I use myself —
-                packaged so you can install them into Claude and run them on
-                day one.
+                The skills on this page are free. They&apos;re the same
+                agents, automations, and workflows I use myself — packaged so
+                you can install them into Claude and run them on day one.
               </p>
 
               <div className="mt-10">
