@@ -130,8 +130,8 @@ export default function UnlockModal({
             </form>
 
             <p className="mt-5 text-[11px] text-bone-dim font-mono leading-relaxed">
-              By entering your email you&apos;ll also get a heads-up when new
-              free skills drop. Unsubscribe anytime — link in every email.
+              By entering your email you&apos;ll also get future communications
+              from Strivian. Unsubscribe anytime — link in every email.
             </p>
           </>
         )}
