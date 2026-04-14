@@ -25,7 +25,7 @@ export const SKILLS: Skill[] = [
     available: true,
     features: [
       "Finds local businesses without websites via Google Maps",
-      "Pulls real photos, reviews, and hours — zero fabrication",
+      "Generates tailored website to business",
       "Generates bespoke Next.js sites with exceptional design",
       "Auto-deploys to Vercel, logs leads to a CSV",
       "Cross-platform preflight (macOS, Linux, Windows)",
