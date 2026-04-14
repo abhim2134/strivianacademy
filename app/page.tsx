@@ -32,13 +32,13 @@ export default function Home() {
       <Nav />
 
       {/* HERO */}
-      <section className="relative mesh overflow-hidden">
+      <section className="relative mesh overflow-hidden min-h-dvh flex flex-col">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 -left-20 h-72 w-72 rounded-full bg-plum/30 blur-3xl" />
           <div className="absolute bottom-10 -right-20 h-80 w-80 rounded-full bg-rust/20 blur-3xl" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-5 sm:px-8 pt-32 sm:pt-40 pb-24 sm:pb-32">
+        <div className="relative w-full mx-auto max-w-6xl px-5 sm:px-8 pt-28 sm:pt-36 pb-10 sm:pb-14">
           {/* Top badge */}
           <div className="rise inline-flex items-center gap-2 rounded-full border hairline bg-ink-2/60 backdrop-blur px-3 py-1.5 text-[11px] font-mono uppercase tracking-widest text-bone-dim">
             <span className="h-1.5 w-1.5 rounded-full bg-acid pulse-dot" />
@@ -95,7 +95,7 @@ export default function Home() {
 
           {/* Stats / caption row */}
           <div
-            className="rise mt-16 grid grid-cols-3 gap-4 sm:gap-8 max-w-xl"
+            className="rise mt-10 sm:mt-14 grid grid-cols-3 gap-4 sm:gap-8 max-w-xl"
             style={{ animationDelay: "420ms" }}
           >
             {[
@@ -115,8 +115,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Logo strip */}
-        <div className="border-y hairline bg-ink-2/40 py-6 sm:py-8 overflow-hidden">
+        {/* Logo strip — pinned to the bottom of the viewport via mt-auto */}
+        <div className="relative mt-auto border-y hairline bg-ink-2/40 py-5 sm:py-7 overflow-hidden">
           <div className="mx-auto max-w-6xl px-5 sm:px-8 mb-5 flex items-center gap-3">
             <span className="h-px w-8 bg-bone-dim/40" />
             <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-bone-dim">
