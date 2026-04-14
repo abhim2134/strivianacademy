@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getSkill } from "@/lib/skills";
-import { saveEmail } from "@/lib/emailStore";
 import { readSkillFile } from "@/lib/skillFiles";
+import { addContactToAudience } from "@/lib/audience";
+import { unsubscribeUrl, unsubscribeApiUrl } from "@/lib/unsubscribe";
 
 export const runtime = "nodejs";
 
@@ -37,19 +38,12 @@ export async function POST(req: Request) {
 
   const cleanEmail = email.trim().toLowerCase();
 
-  await saveEmail({
-    email: cleanEmail,
-    skillId,
-    at: new Date().toISOString(),
-    ua: req.headers.get("user-agent") ?? undefined,
-    ip:
-      req.headers.get("x-forwarded-for") ??
-      req.headers.get("x-real-ip") ??
-      undefined,
-  });
+  const audienceResult = await addContactToAudience(cleanEmail, skillId);
+  if (audienceResult.error) {
+    console.warn("[unlock] audience issue", audienceResult.error);
+  }
 
   const apiKey = process.env.RESEND_API_KEY;
-
   if (!apiKey) {
     console.warn("[unlock] RESEND_API_KEY missing — skipping email send");
     return NextResponse.json({ ok: true, emailSent: false });
@@ -64,8 +58,16 @@ export async function POST(req: Request) {
     }))
   );
 
+  const unsubUrl = unsubscribeUrl(cleanEmail);
+  const unsubApi = unsubscribeApiUrl(cleanEmail);
+
+  const listUnsubscribeHeaders = {
+    "List-Unsubscribe": `<${unsubUrl}>, <mailto:abhi@strivianacademy.com?subject=unsubscribe>`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
+
   const subjectUser = `${skill.title} — your free Claude skill`;
-  const htmlUser = renderUserEmail(skill.title);
+  const htmlUser = renderUserEmail(skill.title, unsubUrl);
 
   const subjectOwner = `[Strivian] New unlock: ${cleanEmail} → ${skill.title}`;
   const htmlOwner = `
@@ -74,6 +76,13 @@ export async function POST(req: Request) {
       <p style="margin:0 0 4px 0"><strong>Email:</strong> ${cleanEmail}</p>
       <p style="margin:0 0 4px 0"><strong>Skill:</strong> ${skill.title} (${skillId})</p>
       <p style="margin:0 0 4px 0"><strong>At:</strong> ${new Date().toISOString()}</p>
+      <p style="margin:0 0 4px 0"><strong>Audience:</strong> ${
+        audienceResult.added
+          ? "added"
+          : audienceResult.alreadyExisted
+            ? "already on list"
+            : "NOT added — " + (audienceResult.error ?? "unknown")
+      }</p>
     </div>
   `;
 
@@ -101,12 +110,16 @@ export async function POST(req: Request) {
       subject: subjectUser,
       html: htmlUser,
       attachments,
+      headers: listUnsubscribeHeaders,
     });
     emailSent = !user.error;
     if (user.error) console.warn("[unlock] user send error", user.error);
   } catch (err) {
     console.warn("[unlock] user send threw", err);
   }
+
+  // unsubApi is available for future use (e.g. debug logs); silence linter
+  void unsubApi;
 
   const res = NextResponse.json({
     ok: true,
@@ -123,7 +136,7 @@ export async function POST(req: Request) {
   return res;
 }
 
-function renderUserEmail(title: string) {
+function renderUserEmail(title: string, unsubUrl: string) {
   return `
   <div style="background:#0a0a0b;color:#f4f1ea;font-family:ui-sans-serif,system-ui,sans-serif;padding:32px 24px;max-width:600px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px">
@@ -151,6 +164,15 @@ function renderUserEmail(title: string) {
     <p style="margin:24px 0 0 0;color:#9a9691;font-size:13px;line-height:1.6">
       Built by a software engineer. Not another prompt bro.<br/>
       More free skills coming — follow <strong style="color:#f4f1ea">@abhi_ai26</strong> on Instagram, TikTok, and YouTube.
+    </p>
+
+    <hr style="border:none;border-top:1px solid rgba(244,241,234,0.08);margin:32px 0 16px 0" />
+    <p style="margin:0;color:#6e6a64;font-size:11px;line-height:1.6">
+      You received this email because you requested a free skill from
+      <a href="https://strivianacademy.com" style="color:#9a9691;text-decoration:underline">strivianacademy.com</a>.
+      You&rsquo;ll also get a heads-up when new free skills drop.<br/>
+      <a href="${unsubUrl}" style="color:#9a9691;text-decoration:underline">Unsubscribe</a>
+      · Strivian LLC
     </p>
   </div>
   `;

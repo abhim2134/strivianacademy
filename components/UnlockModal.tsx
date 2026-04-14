@@ -129,8 +129,9 @@ export default function UnlockModal({
               )}
             </form>
 
-            <p className="mt-5 text-[11px] text-bone-dim font-mono">
-              No spam. No course funnel. One email per new skill, max.
+            <p className="mt-5 text-[11px] text-bone-dim font-mono leading-relaxed">
+              By entering your email you&apos;ll also get a heads-up when new
+              free skills drop. Unsubscribe anytime — link in every email.
             </p>
           </>
         )}
