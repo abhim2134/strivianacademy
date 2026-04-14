@@ -48,16 +48,11 @@ export async function POST(req: Request) {
       undefined,
   });
 
-  const files = skill.files.map((f) => ({
-    name: f,
-    url: `/api/skills/${skillId}/files/${encodeURIComponent(f)}`,
-  }));
-
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
     console.warn("[unlock] RESEND_API_KEY missing — skipping email send");
-    return NextResponse.json({ ok: true, files, emailSent: false });
+    return NextResponse.json({ ok: true, emailSent: false });
   }
 
   const resend = new Resend(apiKey);
@@ -115,9 +110,9 @@ export async function POST(req: Request) {
 
   const res = NextResponse.json({
     ok: true,
-    files,
     emailSent,
     ownerEmailSent,
+    recipient: cleanEmail,
   });
   res.cookies.set(`unlocked_${skillId}`, "1", {
     httpOnly: false,
