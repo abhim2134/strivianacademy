@@ -15,7 +15,7 @@ export const SKILLS: Skill[] = [
   {
     id: "ai-website-business",
     title: "AI Website Business",
-    tagline: "One prompt. A full website business. Shipped.",
+    tagline: "One command. A full website business. Shipped.",
     description:
       "A Claude skill that researches local businesses, builds them a complete Next.js website from public signals, pushes it to GitHub, deploys it to Vercel, and logs everything to a file — all in one shot.",
     category: "Agents",
