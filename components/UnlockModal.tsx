@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import type { Skill } from "@/lib/skills";
 
+type FileLink = { name: string; url: string };
 type State =
   | { kind: "form" }
   | { kind: "loading" }
-  | { kind: "success"; downloadUrl: string; emailSent: boolean }
+  | { kind: "success"; files: FileLink[]; emailSent: boolean }
   | { kind: "error"; message: string };
 
 export default function UnlockModal({
@@ -51,7 +52,7 @@ export default function UnlockModal({
       }
       setState({
         kind: "success",
-        downloadUrl: data.downloadUrl,
+        files: Array.isArray(data.files) ? data.files : [],
         emailSent: Boolean(data.emailSent),
       });
     } catch {
@@ -146,25 +147,45 @@ export default function UnlockModal({
             </h2>
             <p className="mt-3 text-bone-dim">
               {state.emailSent
-                ? "Check your inbox — the skill is on its way. Meanwhile, grab it instantly below:"
-                : "Download the skill instantly below. (I also got a notification so I can add you to the list.)"}
+                ? "Sent to your inbox. You can also grab the files right here:"
+                : "Grab the files below. I also got a notification so you're on the list."}
             </p>
-            <a
-              href={state.downloadUrl}
-              download
-              className="mt-6 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-acid text-ink px-5 py-4 font-semibold hover:bg-bone transition-colors"
-            >
-              Download {skill.id}.zip ↓
-            </a>
+
+            <div className="mt-6 space-y-2">
+              {state.files.map((f) => (
+                <a
+                  key={f.name}
+                  href={f.url}
+                  download
+                  className="group flex items-center justify-between gap-3 rounded-2xl border hairline bg-ink hover:bg-bone/5 hover:border-bone/30 px-4 py-3 transition-colors"
+                >
+                  <span className="flex items-center gap-3 min-w-0">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-bone-dim shrink-0">
+                      .md
+                    </span>
+                    <span className="truncate font-medium text-bone">
+                      {f.name}
+                    </span>
+                  </span>
+                  <span className="text-bone-dim group-hover:text-acid transition-colors shrink-0">
+                    ↓
+                  </span>
+                </a>
+              ))}
+            </div>
+
             <div className="mt-6 rounded-2xl border hairline bg-ink p-4 text-sm">
               <div className="font-mono text-[10px] uppercase tracking-widest text-bone-dim mb-2">
-                Install
+                How to install
               </div>
-              <pre className="text-acid text-[12px] overflow-auto">
-{`mkdir -p ~/.claude/skills/${skill.id}
-# unzip the download into that folder`}
+              <p className="text-bone/90 leading-relaxed">
+                Open Claude Code, drop both files into the chat, and say:
+              </p>
+              <pre className="mt-3 text-acid text-[12px] overflow-auto whitespace-pre-wrap">
+{`Create a Claude skill from these two files.`}
               </pre>
             </div>
+
             <button
               onClick={onClose}
               className="mt-4 w-full text-sm text-bone-dim hover:text-bone"
