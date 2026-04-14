@@ -40,7 +40,7 @@ export default function Home() {
           {/* Top badge */}
           <div className="rise inline-flex items-center gap-2 rounded-full border hairline bg-ink-2/60 backdrop-blur px-3 py-1.5 text-[11px] font-mono uppercase tracking-widest text-bone-dim">
             <span className="h-1.5 w-1.5 rounded-full bg-acid pulse-dot" />
-            Free Claude skills · built by an engineer
+            Free systems · built by an engineer
           </div>
 
           {/* Headline */}

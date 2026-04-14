@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://strivianacademy.com"),
   title: "Strivian Academy — Real AI systems with Claude",
   description:
-    "Free Claude skills, automations, and workflows built by a software engineer — not another prompt bro.",
+    "Free systems built by a software engineer using Claude — not another prompt bro.",
   openGraph: {
     title: "Strivian Academy",
     description:
