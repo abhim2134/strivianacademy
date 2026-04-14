@@ -92,8 +92,7 @@ export default function UnlockModal({
               {skill.title}
             </h2>
             <p className="mt-2 text-bone-dim text-sm">
-              Drop your email and I&apos;ll send you the files. You&apos;ll
-              also get a direct download right after.
+              Drop your email and I&apos;ll send you the files.
             </p>
 
             <form onSubmit={submit} className="mt-6 space-y-3">

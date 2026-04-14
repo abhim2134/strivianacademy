@@ -67,7 +67,7 @@ export default function Home() {
             style={{ animationDelay: "200ms" }}
           >
             Free skills, automations, and workflows built by a software
-            engineer —{" "}
+            engineer and learnings on how to be a real builder—{" "}
             <span className="text-bone italic font-display">
               not another prompt bro
             </span>
