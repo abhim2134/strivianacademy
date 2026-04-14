@@ -21,7 +21,7 @@ export const SKILLS: Skill[] = [
       "A Claude skill that researches local businesses, builds them a complete Next.js website from public signals, pushes it to GitHub, deploys it to Vercel, and logs everything to a spreadsheet — all in one shot.",
     category: "Agents",
     difficulty: "Intermediate",
-    readTime: "30 min setup",
+    readTime: "2 min setup",
     files: ["SKILL.md", "design-tokens.md"],
     accent: "acid",
     available: true,
