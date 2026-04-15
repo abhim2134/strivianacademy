@@ -233,17 +233,58 @@ If it errors:
 
 3. Re-run `vercel whoami` to verify.
 
-### 0.6 — Preflight complete
+### 0.6 — Verify Claude for Chrome is available (HARD GATE — do not skip)
 
-When all four commands below succeed with no errors, Phase 0 is done and Phase 1 can
-start:
+The entire research phase (Phase 1) and the deploy verification step (Phase 4) rely on
+**Claude for Chrome** — Anthropic's browser-agent extension that lets you drive a real
+Chrome browser to navigate Google Maps, read listings, screenshot photos, and verify
+deployed URLs. Without it, this skill cannot run. Pre-check it here so users never hit
+a confusing mid-run failure.
+
+**How to check:** Before proceeding, inspect your own available tools. You're looking for
+browser-driving tools with names like `browser_navigate`, `browser_screenshot`,
+`browser_click`, `browser_type`, `browser_snapshot`, or anything from a Chrome/Playwright
+MCP server. If any of those are present, Claude for Chrome (or an equivalent browser
+agent) is active and you can proceed.
+
+**If browser tools are NOT available**, stop immediately and show the user this exact
+message. Do not attempt to continue with WebFetch, WebSearch, or text-only fallbacks —
+the skill's zero-fabrication rule makes those paths impossible to follow correctly.
+
+> ### 🚫 Claude for Chrome is required
+>
+> This skill uses a real browser to research local businesses on Google Maps, pull
+> real photos and reviews, and verify deployed sites. Without the Chrome extension,
+> I can't run it without making things up — which this skill explicitly forbids.
+>
+> **The fix (2 minutes):**
+> 1. Open **https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome**
+>    and follow the install steps (any paid Claude plan works — Pro, Max, Team, or
+>    Enterprise).
+> 2. Once installed, open Chrome, sign in, and enable the extension for this session.
+> 3. Come back to Claude Code and say **"restart the AI Website Business skill"**.
+>
+> I'll pick up right where we left off — all the tools I already installed in Phase 0
+> (Node, git, gh, vercel) are still good to go, so the next run will skip straight to
+> this check.
+>
+> *(If you're on the free Claude plan, you'll need to upgrade to any paid tier first
+> — the Chrome extension isn't available on the free tier.)*
+
+Then **exit the skill cleanly**. Do not proceed to Phase 1. Do not try to gather
+business data through any other means.
+
+### 0.7 — Preflight complete
+
+When all four commands below succeed with no errors **and** browser tools are
+confirmed available, Phase 0 is done and Phase 1 can start:
 
 ```bash
 node --version && git --version && gh auth status && vercel whoami
 ```
 
 Show the user a compact summary:
-> ✅ Node vX.Y.Z · git ready · GitHub: @their-handle · Vercel: their-team
+> ✅ Node vX.Y.Z · git ready · GitHub: @their-handle · Vercel: their-team · Chrome agent ready
 > You're all set up — I'll never have to ask you to install anything again on this
 > machine. Starting research now.
 
@@ -251,7 +292,7 @@ Show the user a compact summary:
 
 ## Phase 1: Research — Find Businesses Without Websites
 
-Use the browser (Claude in Chrome) to search Google Maps for businesses matching the user's criteria.
+Use the browser (Claude for Chrome) to search Google Maps for businesses matching the user's criteria.
 
 ### Search Strategy
 1. Navigate to Google Maps
