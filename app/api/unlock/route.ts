@@ -3,11 +3,10 @@ import { Resend } from "resend";
 import { getSkill } from "@/lib/skills";
 import { readSkillFile } from "@/lib/skillFiles";
 import { addContactToAudience } from "@/lib/audience";
-import { unsubscribeUrl, unsubscribeApiUrl } from "@/lib/unsubscribe";
+import { unsubscribeUrl } from "@/lib/unsubscribe";
 
 export const runtime = "nodejs";
 
-const OWNER_EMAIL = "abhiram.mullapudi04@gmail.com";
 const FROM = "Abhi · Strivian Academy <abhi@strivianacademy.com>";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,7 +58,6 @@ export async function POST(req: Request) {
   );
 
   const unsubUrl = unsubscribeUrl(cleanEmail);
-  const unsubApi = unsubscribeApiUrl(cleanEmail);
 
   const listUnsubscribeHeaders = {
     "List-Unsubscribe": `<${unsubUrl}>, <mailto:abhi@strivianacademy.com?subject=unsubscribe>`,
@@ -69,32 +67,7 @@ export async function POST(req: Request) {
   const subjectUser = `${skill.title} — your free Claude skill`;
   const htmlUser = renderUserEmail(skill.title, unsubUrl);
 
-  const subjectOwner = `[Strivian] New unlock: ${cleanEmail} → ${skill.title}`;
-  const htmlOwner = `
-    <div style="font-family:ui-sans-serif,system-ui,sans-serif;max-width:560px">
-      <h2 style="margin:0 0 12px 0">New skill unlock</h2>
-      <p style="margin:0 0 4px 0"><strong>Email:</strong> ${cleanEmail}</p>
-      <p style="margin:0 0 4px 0"><strong>Skill:</strong> ${skill.title} (${skillId})</p>
-      <p style="margin:0 0 4px 0"><strong>At:</strong> ${new Date().toISOString()}</p>
-    </div>
-  `;
-
   let emailSent = false;
-  let ownerEmailSent = false;
-
-  try {
-    const owner = await resend.emails.send({
-      from: FROM,
-      to: OWNER_EMAIL,
-      subject: subjectOwner,
-      html: htmlOwner,
-      attachments,
-    });
-    ownerEmailSent = !owner.error;
-    if (owner.error) console.warn("[unlock] owner send error", owner.error);
-  } catch (err) {
-    console.warn("[unlock] owner send threw", err);
-  }
 
   try {
     const user = await resend.emails.send({
@@ -111,13 +84,9 @@ export async function POST(req: Request) {
     console.warn("[unlock] user send threw", err);
   }
 
-  // unsubApi is available for future use (e.g. debug logs); silence linter
-  void unsubApi;
-
   const res = NextResponse.json({
     ok: true,
     emailSent,
-    ownerEmailSent,
     recipient: cleanEmail,
   });
   res.cookies.set(`unlocked_${skillId}`, "1", {
