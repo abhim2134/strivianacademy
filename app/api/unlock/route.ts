@@ -76,13 +76,6 @@ export async function POST(req: Request) {
       <p style="margin:0 0 4px 0"><strong>Email:</strong> ${cleanEmail}</p>
       <p style="margin:0 0 4px 0"><strong>Skill:</strong> ${skill.title} (${skillId})</p>
       <p style="margin:0 0 4px 0"><strong>At:</strong> ${new Date().toISOString()}</p>
-      <p style="margin:0 0 4px 0"><strong>Audience:</strong> ${
-        audienceResult.added
-          ? "added"
-          : audienceResult.alreadyExisted
-            ? "already on list"
-            : "NOT added — " + (audienceResult.error ?? "unknown")
-      }</p>
     </div>
   `;
 
