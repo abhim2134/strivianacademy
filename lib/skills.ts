@@ -31,6 +31,32 @@ export const SKILLS: Skill[] = [
       "Cross-platform preflight (macOS, Linux, Windows)",
     ],
   },
+  {
+    id: "local-business-gaps",
+    title: "Local Business Gaps",
+    tagline: "Cold calling is dead. Walk in with evidence.",
+    description:
+      "A Claude skill that researches any local business across 8+ signal sources, finds the exact digital gaps you can pitch them, and writes a sales brief per prospect — what's broken, what to sell, what to build, and rough price band.",
+    category: "Agents",
+    readTime: "3 min setup",
+    files: [
+      "SKILL.md",
+      "intake.md",
+      "gap-catalog.md",
+      "recipe-home-services.md",
+      "recipe-restaurants-cafes.md",
+      "recipe-professional-services.md",
+    ],
+    accent: "plum",
+    available: true,
+    features: [
+      "Pulls signals from GBP, website, SERP, Meta Ad Library, socials, Yelp, BBB, LinkedIn",
+      "Scores gaps against an opinionated catalog with severity + evidence",
+      "Maps each gap to a concrete service you sell and what to build",
+      "Per-business pitch brief + cross-target matrix for batch prospecting",
+      "Adapts the signal stack to your vertical and services automatically",
+    ],
+  },
 ];
 
 export function getSkill(id: string): Skill | undefined {
