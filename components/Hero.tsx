@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function Hero() {
   const [typed, setTyped] = useState("");
-  const full = "claude skill install ai-website-business";
+  const full = "copy this business gap research skill";
   useEffect(() => {
     let i = 0;
     const t = setInterval(() => {
@@ -40,8 +40,7 @@ export default function Hero() {
 
         <h1 className="sx-hero-title">
           <span className="sx-h-line">Real</span>
-          <span className="sx-h-line sx-h-line-accent">AI systems</span>
-          <span className="sx-h-line">with Claude.</span>
+          <span className="sx-h-line sx-h-line-accent">AI systems.</span>
         </h1>
 
         <div className="sx-hero-grid">
@@ -67,22 +66,21 @@ export default function Hero() {
                   className="sx-term-dot"
                   style={{ background: "var(--neon-3)" }}
                 />
-                <span className="sx-term-title">~/strivian</span>
+                <span className="sx-term-title">~/claude</span>
               </div>
               <div className="sx-term-body">
-                <div className="sx-term-line" style={{ opacity: 0.55 }}>
-                  $ claude skill --help
-                </div>
-                <div className="sx-term-line">  install · run · share</div>
                 <div className="sx-term-line">
-                  <span style={{ color: "var(--neon-1)" }}>$</span> {typed}
+                  <span style={{ color: "var(--neon-1)" }}>&gt;</span> {typed}
                   <span className="sx-caret" />
+                </div>
+                <div className="sx-term-line" style={{ opacity: 0.55 }}>
+                  cloning to ~/.claude/skills/business-gap-research
                 </div>
                 <div
                   className="sx-term-line"
                   style={{ color: "var(--neon-2)" }}
                 >
-                  ✓ installed. try it.
+                  ✓ copied. try it.
                 </div>
               </div>
             </div>
