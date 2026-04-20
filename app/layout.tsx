@@ -1,23 +1,35 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import {
+  Instrument_Serif,
+  Space_Grotesk,
+  JetBrains_Mono,
+  Inter,
+} from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const instrument = Instrument_Serif({
   variable: "--font-display",
   subsets: ["latin"],
-  axes: ["SOFT", "opsz"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
-const interTight = Inter_Tight({
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-ui",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -48,11 +60,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${interTight.variable} ${jetbrains.variable}`}
+      data-mode="dark"
+      className={`${instrument.variable} ${spaceGrotesk.variable} ${inter.variable} ${jetbrains.variable}`}
     >
-      <body className="min-h-dvh bg-ink text-bone antialiased selection:bg-acid selection:text-ink">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

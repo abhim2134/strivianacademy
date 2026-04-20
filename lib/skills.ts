@@ -9,6 +9,7 @@ export type Skill = {
   accent: "acid" | "plum" | "rust";
   available: boolean;
   features: string[];
+  glyph: string;
 };
 
 export const SKILLS: Skill[] = [
@@ -30,6 +31,7 @@ export const SKILLS: Skill[] = [
       "Auto-deploys to Vercel, logs leads to a CSV",
       "Cross-platform preflight (macOS, Linux, Windows)",
     ],
+    glyph: "◈",
   },
   {
     id: "local-business-gaps",
@@ -56,6 +58,7 @@ export const SKILLS: Skill[] = [
       "Per-business pitch brief + cross-target matrix for batch prospecting",
       "Adapts the signal stack to your vertical and services automatically",
     ],
+    glyph: "⟐",
   },
 ];
 

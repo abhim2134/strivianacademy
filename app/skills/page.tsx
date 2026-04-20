@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BackgroundCanvas from "@/components/BackgroundCanvas";
 import SkillCard from "@/components/SkillCard";
 import { SKILLS } from "@/lib/skills";
 
@@ -14,75 +15,117 @@ export const metadata: Metadata = {
 export default function SkillsPage() {
   const available = SKILLS.filter((s) => s.available);
   const upcoming = SKILLS.filter((s) => !s.available);
+  const featured = available[0];
+  const rest = available.slice(1);
 
   return (
-    <div className="grain relative">
-      <Nav />
+    <>
+      <BackgroundCanvas />
+      <div className="sx-wrap">
+        <Nav page="skills" />
 
-      {/* HERO */}
-      <section className="relative mesh overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-10 right-1/3 h-80 w-80 rounded-full bg-plum/20 blur-3xl" />
-        </div>
-        <div className="relative mx-auto max-w-6xl px-5 sm:px-8 pt-32 sm:pt-40 pb-16 sm:pb-24">
-          <div className="flex items-center gap-3 mb-6">
-            <Link
-              href="/"
-              className="font-mono text-[11px] uppercase tracking-widest text-bone-dim hover:text-bone"
-            >
-              ← Home
-            </Link>
-            <span className="text-bone-dim">/</span>
-            <span className="font-mono text-[11px] uppercase tracking-widest text-bone">
-              Skills
+        {/* HERO */}
+        <section className="sx-skills-hero">
+          <div className="sx-skills-hero-inner">
+            <div className="sx-skills-crumb">
+              strivianacademy.com{" "}
+              <span style={{ opacity: 0.4 }}>/</span>{" "}
+              <span style={{ color: "var(--neon-1)" }}>skills</span>
+            </div>
+            <h1 className="sx-skills-h1">
+              Free Claude <span className="sx-gradient-text">skills</span>.
+            </h1>
+            <p className="sx-skills-sub">
+              Real systems you can drop into Claude today. New ones ship
+              whenever I build something worth sharing.
+            </p>
+            <div className="sx-skills-stats">
+              <div className="sx-stat">
+                <div className="sx-stat-k">Total</div>
+                <div className="sx-stat-v">{SKILLS.length}</div>
+              </div>
+              <div className="sx-stat">
+                <div className="sx-stat-k">Available</div>
+                <div className="sx-stat-v">{available.length}</div>
+              </div>
+              <div className="sx-stat">
+                <div className="sx-stat-k">Coming</div>
+                <div className="sx-stat-v">{upcoming.length}</div>
+              </div>
+              <div className="sx-stat sx-stat-accent">
+                <div className="sx-stat-k">Updated</div>
+                <div className="sx-stat-v">today</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* GRID */}
+        <section className="sx-grid-section">
+          <div className="sx-grid-head">
+            <span>
+              {available.length}{" "}
+              {available.length === 1 ? "skill" : "skills"} available
+              {upcoming.length > 0 && (
+                <>
+                  {" · "}
+                  <span style={{ color: "var(--neon-1)" }}>
+                    {upcoming.length} coming
+                  </span>
+                </>
+              )}
+            </span>
+            <span className="sx-meta-dim">
+              {"// new skills whenever I ship"}
             </span>
           </div>
 
-          <h1 className="rise font-display text-[44px] sm:text-[84px] lg:text-[100px] leading-[0.92] tracking-[-0.035em] font-medium">
-            Free Claude
-            <br />
-            <span className="italic font-light">skills</span>, ready to
-            install.
-          </h1>
-          <p
-            className="rise mt-6 max-w-2xl text-lg sm:text-xl text-bone-dim leading-relaxed"
-            style={{ animationDelay: "120ms" }}
-          >
-            Real systems you can drop into Claude today. New ones ship
-            whenever I build something worth sharing.
-          </p>
-          <div
-            className="rise mt-8 inline-flex items-center gap-3 text-[11px] font-mono uppercase tracking-widest text-bone-dim"
-            style={{ animationDelay: "220ms" }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-acid pulse-dot" />
-            {available.length} available
-            {upcoming.length > 0 && ` · ${upcoming.length} coming soon`}
-          </div>
-        </div>
-      </section>
-
-      {/* SKILL CARDS */}
-      <section className="relative border-t hairline">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 py-16 sm:py-24 space-y-8">
-          {available.map((skill, i) => (
-            <SkillCard key={skill.id} skill={skill} index={i} />
-          ))}
-
-          {/* Placeholder for future skills */}
-          <div className="rounded-3xl border hairline border-dashed p-10 sm:p-16 text-center">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-bone-dim mb-4">
-              More shipping soon
+          {featured ? (
+            <div
+              className="sx-skill-grid"
+              style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
+            >
+              <SkillCard skill={featured} variant="feature" />
+              {rest.map((s) => (
+                <SkillCard key={s.id} skill={s} variant="card" />
+              ))}
             </div>
-            <h3 className="font-display text-2xl sm:text-3xl tracking-tight text-bone-dim">
-              Follow <span className="text-bone">@abhi_ai26</span> to know when
-              the next one drops.
-            </h3>
-          </div>
-        </div>
-      </section>
+          ) : (
+            <div className="sx-empty">
+              <div style={{ fontSize: 48 }}>⌀</div>
+              <h3>
+                More shipping <span>soon</span>.
+              </h3>
+              <div className="sx-meta-dim" style={{ marginTop: 8 }}>
+                follow @abhi_ai26 for drops
+              </div>
+            </div>
+          )}
+        </section>
 
-      <Footer />
-    </div>
+        {/* REQUEST */}
+        <section className="sx-newsletter">
+          <div className="sx-newsletter-inner">
+            <div className="sx-newsletter-kicker">◎ more shipping soon</div>
+            <h2 className="sx-newsletter-title">
+              Follow <span className="sx-rainbow">@abhi_ai26</span>
+              <br />
+              for drops.
+            </h2>
+            <p className="sx-newsletter-sub">
+              New Claude skills, teardowns, and builds — whenever I ship
+              something worth sharing.
+            </p>
+            <div className="sx-newsletter-cta">
+              <Link href="/#follow" className="sx-btn sx-btn-neon">
+                Find me →
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+    </>
   );
 }

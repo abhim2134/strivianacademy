@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BackgroundCanvas from "@/components/BackgroundCanvas";
 import { verifyUnsubscribeToken } from "@/lib/unsubscribe";
 import { unsubscribeContact } from "@/lib/audience";
 
@@ -41,80 +42,92 @@ export default async function UnsubscribePage({
   }
 
   return (
-    <div className="grain relative min-h-dvh flex flex-col">
-      <Nav />
-      <main className="flex-1 flex items-center justify-center px-5 py-32">
-        <div className="w-full max-w-lg">
-          {state === "ok" && (
-            <>
-              <div className="h-12 w-12 rounded-2xl bg-acid text-ink flex items-center justify-center mb-6 text-2xl font-bold">
-                ✓
-              </div>
-              <h1 className="font-display text-4xl sm:text-5xl tracking-tight font-medium leading-tight">
-                Unsubscribed.
-              </h1>
-              <p className="mt-4 text-bone-dim text-lg">
-                <span className="text-bone font-mono">{shownEmail}</span> has
-                been removed from the list. You won&apos;t receive any more
-                skill drops from Strivian Academy.
-              </p>
-              <p className="mt-6 text-sm text-bone-dim">
-                Changed your mind?{" "}
-                <Link href="/skills" className="text-bone underline hover:text-acid">
-                  Grab a skill again
-                </Link>{" "}
-                and you&apos;ll be re-subscribed.
-              </p>
-            </>
-          )}
-
-          {(state === "missing" || state === "invalid") && (
-            <>
-              <div className="h-12 w-12 rounded-2xl border hairline bg-ink-2 flex items-center justify-center mb-6 text-2xl text-bone-dim">
-                ?
-              </div>
-              <h1 className="font-display text-4xl sm:text-5xl tracking-tight font-medium leading-tight">
-                Link invalid or expired.
-              </h1>
-              <p className="mt-4 text-bone-dim text-lg">
-                This unsubscribe link doesn&apos;t check out. If you want to be
-                removed from the list, reply to any of my emails with{" "}
-                <span className="text-bone font-mono">unsubscribe</span> and
-                I&apos;ll take you off manually.
-              </p>
-              <Link
-                href="/"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border hairline px-5 py-3 text-sm font-medium hover:bg-bone/5"
-              >
-                ← Home
-              </Link>
-            </>
-          )}
-
-          {state === "error" && (
-            <>
-              <div className="h-12 w-12 rounded-2xl bg-rust text-bone flex items-center justify-center mb-6 text-2xl font-bold">
-                !
-              </div>
-              <h1 className="font-display text-4xl sm:text-5xl tracking-tight font-medium leading-tight">
-                Something went wrong.
-              </h1>
-              <p className="mt-4 text-bone-dim text-lg">
-                {errorMessage || "Try again in a minute."} If this keeps
-                happening, email{" "}
-                <a
-                  href="mailto:abhi@strivianacademy.com"
-                  className="text-bone underline"
+    <>
+      <BackgroundCanvas />
+      <div className="sx-wrap">
+        <Nav />
+        <main className="sx-unsub">
+          <div className="sx-unsub-inner">
+            {state === "ok" && (
+              <>
+                <div className="sx-unsub-icon">✓</div>
+                <h1 className="sx-unsub-title">Unsubscribed.</h1>
+                <p className="sx-unsub-sub">
+                  <span
+                    className="sx-mono"
+                    style={{ color: "var(--ink)" }}
+                  >
+                    {shownEmail}
+                  </span>{" "}
+                  has been removed from the list. You won&apos;t receive any
+                  more drops from Strivian Academy.
+                </p>
+                <p
+                  className="sx-mono"
+                  style={{
+                    marginTop: 24,
+                    fontSize: 12,
+                    color: "var(--ink-dim)",
+                  }}
                 >
-                  abhi@strivianacademy.com
-                </a>
-                .
-              </p>
-            </>
-          )}
-        </div>
-      </main>
-      <Footer />
-    </div>
+                  Changed your mind?{" "}
+                  <Link
+                    href="/skills"
+                    style={{
+                      color: "var(--neon-1)",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    Grab a skill again
+                  </Link>{" "}
+                  and you&apos;ll be re-subscribed.
+                </p>
+              </>
+            )}
+
+            {(state === "missing" || state === "invalid") && (
+              <>
+                <div className="sx-unsub-icon is-warn">?</div>
+                <h1 className="sx-unsub-title">Link invalid or expired.</h1>
+                <p className="sx-unsub-sub">
+                  This unsubscribe link doesn&apos;t check out. If you want to
+                  be removed, reply to any of my emails with{" "}
+                  <span className="sx-mono" style={{ color: "var(--ink)" }}>
+                    unsubscribe
+                  </span>{" "}
+                  and I&apos;ll take you off manually.
+                </p>
+                <Link
+                  href="/"
+                  className="sx-btn"
+                  style={{ marginTop: 28 }}
+                >
+                  ← Home
+                </Link>
+              </>
+            )}
+
+            {state === "error" && (
+              <>
+                <div className="sx-unsub-icon is-err">!</div>
+                <h1 className="sx-unsub-title">Something went wrong.</h1>
+                <p className="sx-unsub-sub">
+                  {errorMessage || "Try again in a minute."} If it keeps
+                  happening, email{" "}
+                  <a
+                    href="mailto:abhi@strivianacademy.com"
+                    style={{ color: "var(--neon-1)" }}
+                  >
+                    abhi@strivianacademy.com
+                  </a>
+                  .
+                </p>
+              </>
+            )}
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 }

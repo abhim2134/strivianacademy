@@ -1,225 +1,173 @@
 import Link from "next/link";
-import {
-  SiClaude,
-  SiNextdotjs,
-  SiVercel,
-  SiGithub,
-  SiTypescript,
-  SiStripe,
-  SiReact,
-  SiNodedotjs,
-  SiSupabase,
-} from "@icons-pack/react-simple-icons";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Ticker from "@/components/Ticker";
+import Hero from "@/components/Hero";
+import BackgroundCanvas from "@/components/BackgroundCanvas";
 import { Socials } from "@/components/Socials";
-
-const MARQUEE_LOGOS = [
-  { name: "Claude", Icon: SiClaude },
-  { name: "Next.js", Icon: SiNextdotjs },
-  { name: "Vercel", Icon: SiVercel },
-  { name: "Supabase", Icon: SiSupabase },
-  { name: "Stripe", Icon: SiStripe },
-  { name: "GitHub", Icon: SiGithub },
-  { name: "TypeScript", Icon: SiTypescript },
-  { name: "React", Icon: SiReact },
-  { name: "Node.js", Icon: SiNodedotjs },
-];
+import { SKILLS } from "@/lib/skills";
 
 export default function Home() {
   return (
-    <div className="grain relative">
-      <Nav />
+    <>
+      <BackgroundCanvas />
+      <div className="sx-wrap">
+        <Ticker />
+        <Nav page="home" />
 
-      {/* HERO */}
-      <section className="relative mesh overflow-hidden min-h-dvh flex flex-col">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 -left-20 h-72 w-72 rounded-full bg-plum/30 blur-3xl" />
-          <div className="absolute bottom-10 -right-20 h-80 w-80 rounded-full bg-rust/20 blur-3xl" />
-        </div>
+        <Hero />
 
-        <div className="relative w-full mx-auto max-w-6xl px-5 sm:px-8 pt-28 sm:pt-36 pb-10 sm:pb-14">
-          {/* Top badge */}
-          <div className="rise inline-flex items-center gap-2 rounded-full border hairline bg-ink-2/60 backdrop-blur px-3 py-1.5 text-[11px] font-mono uppercase tracking-widest text-bone-dim">
-            <span className="h-1.5 w-1.5 rounded-full bg-acid pulse-dot" />
-            Free systems · built by an engineer
+        {/* FEATURED SKILLS */}
+        <section className="sx-section">
+          <div className="sx-section-head">
+            <div className="sx-section-num">§01</div>
+            <div>
+              <div className="sx-section-kicker">The library</div>
+              <h2 className="sx-section-title">Real Claude skills. Drop them in.</h2>
+            </div>
+            <p className="sx-section-desc">
+              Agents, automations, and workflows packaged as Claude skills you
+              can install and run on day one. New ones drop whenever I build
+              something worth sharing.
+            </p>
           </div>
-
-          {/* Headline */}
-          <h1
-            className="rise font-display mt-8 text-[44px] leading-[0.92] sm:text-[76px] sm:leading-[0.9] lg:text-[108px] tracking-[-0.035em] font-medium whitespace-nowrap"
-            style={{ animationDelay: "80ms" }}
-          >
-            <span className="italic font-light">Real</span>{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-ink px-3">AI</span>
-              <span className="absolute inset-0 bg-acid -skew-x-6 rounded-sm" />
-            </span>{" "}
-            <span className="italic font-light">systems.</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p
-            className="rise mt-8 max-w-2xl text-lg sm:text-xl text-bone-dim leading-relaxed"
-            style={{ animationDelay: "200ms" }}
-          >
-            Free skills, automations, and workflows built by a software
-            engineer and learnings on how to be a real builder—{" "}
-            <span className="text-bone italic font-display">
-              not another prompt bro
-            </span>
-            .
-          </p>
-
-          {/* CTAs */}
-          <div
-            className="rise mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
-            style={{ animationDelay: "320ms" }}
-          >
-            <Link
-              href="/skills"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-acid text-ink px-6 py-4 text-[15px] font-semibold hover:bg-bone hover:text-ink transition-all"
-            >
-              Get free Claude skills
-              <span className="transition-transform group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-            <a
-              href="#about"
-              className="inline-flex items-center justify-center gap-2 rounded-full border hairline bg-ink-2/60 backdrop-blur px-6 py-4 text-[15px] font-medium hover:bg-bone/5 hover:border-bone/30 transition-all"
-            >
-              Who am I
-            </a>
-          </div>
-
-          {/* Stats / caption row */}
-          <div
-            className="rise mt-10 sm:mt-14 grid grid-cols-3 gap-4 sm:gap-8 max-w-xl"
-            style={{ animationDelay: "420ms" }}
-          >
-            {[
-              { n: "Free", l: "To install" },
-              { n: "Day 1", l: "Usable" },
-              { n: "∞", l: "Things to build" },
-            ].map((s) => (
-              <div key={s.l} className="border-l hairline pl-4">
-                <div className="font-display text-3xl sm:text-4xl font-medium tracking-tight">
-                  {s.n}
-                </div>
-                <div className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-bone-dim mt-1">
-                  {s.l}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Logo strip — pinned to the bottom of the viewport via mt-auto */}
-        <div className="relative mt-auto border-y hairline bg-ink-2/40 py-5 sm:py-7 overflow-hidden">
-          <div className="mx-auto max-w-6xl px-5 sm:px-8 mb-5 flex items-center gap-3">
-            <span className="h-px w-8 bg-bone-dim/40" />
-            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-bone-dim">
-              Real tools · real systems · no slop
-            </span>
-          </div>
-          <div className="marquee-track flex gap-12 sm:gap-16 whitespace-nowrap items-center">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex gap-12 sm:gap-16 shrink-0 items-center"
-              >
-                {MARQUEE_LOGOS.map(({ name, Icon }) => (
-                  <div
-                    key={`${i}-${name}`}
-                    className="flex items-center gap-3 text-bone/70 hover:text-bone transition-colors"
-                    title={name}
-                  >
-                    <Icon className="h-7 w-7 sm:h-9 sm:w-9 shrink-0" />
-                    <span className="font-display text-lg sm:text-xl tracking-tight hidden sm:inline">
-                      {name}
+          <div className="sx-section-body">
+            <div className="sx-featured-grid">
+              {SKILLS.map((s, i) => (
+                <Link
+                  key={s.id}
+                  href="/skills"
+                  className={"sx-featured" + (i === 0 ? " sx-featured-hero" : "")}
+                >
+                  <div className="sx-featured-top">
+                    <div className="sx-featured-glyph">{s.glyph}</div>
+                    <span
+                      className={
+                        "sx-tier" + (s.available ? "" : " sx-tier-paid")
+                      }
+                    >
+                      {s.available ? "FREE" : "SOON"}
                     </span>
                   </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <section id="about" className="relative">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 py-24 sm:py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-            <div className="lg:col-span-4">
-              <div className="font-mono text-[11px] uppercase tracking-widest text-bone-dim mb-4">
-                /about
-              </div>
-              <h2 className="font-display text-4xl sm:text-5xl tracking-tight font-medium leading-tight">
-                Built by an <span className="italic">engineer</span>.
-              </h2>
+                  <div className="sx-featured-meta">
+                    {s.category} · {s.readTime}
+                  </div>
+                  <div className="sx-featured-title">{s.title}</div>
+                  <p className="sx-featured-desc">{s.tagline}</p>
+                  <div className="sx-featured-foot">
+                    <span>{s.files.length} files · by email</span>
+                    <span>view →</span>
+                  </div>
+                </Link>
+              ))}
             </div>
-            <div className="lg:col-span-8 lg:pt-4">
-              <p className="text-xl sm:text-2xl text-bone leading-relaxed font-display font-light">
-                I&apos;m a software engineer who builds AI automation systems
-                with Claude. I teach non-technical and semi-technical people
-                how to build{" "}
-                <span className="bg-acid text-ink px-2 italic">
-                  real AI systems
-                </span>{" "}
-                that actually work.
-              </p>
-              <p className="mt-8 text-base text-bone-dim leading-relaxed max-w-2xl">
-                The skills on this page are free. They&apos;re the same
-                agents, automations, and workflows I use myself — packaged so
-                you can install them into Claude and run them on day one.
-              </p>
-
-              <div className="mt-10">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-bone-dim mb-4">
-                  Find me
-                </div>
-                <Socials />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BIG CTA */}
-      <section className="relative border-t hairline">
-        <div className="mx-auto max-w-6xl px-5 sm:px-8 py-20 sm:py-28">
-          <div className="relative overflow-hidden rounded-3xl border hairline bg-ink-2 p-8 sm:p-14">
-            <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-acid/20 blur-3xl" />
-            <div className="absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-plum/20 blur-3xl" />
-            <div className="relative">
-              <div className="font-mono text-[11px] uppercase tracking-widest text-bone-dim">
-                /skills
-              </div>
-              <h3 className="mt-4 font-display text-4xl sm:text-6xl tracking-tight font-medium max-w-3xl">
-                Real Claude skills.{" "}
-                <span className="italic text-bone-dim">Drop them in.</span>
-              </h3>
-              <p className="mt-6 max-w-xl text-bone-dim text-lg">
-                Agents, automations, and workflows — packaged as Claude
-                skills you can install and run on day one. New ones drop
-                whenever I build something worth sharing.
-              </p>
-              <Link
-                href="/skills"
-                className="mt-10 inline-flex items-center gap-2 rounded-full bg-acid text-ink px-6 py-4 text-[15px] font-semibold hover:bg-bone transition-all group"
-              >
-                Browse the skills
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
+            <div className="sx-featured-after">
+              <span className="sx-meta-dim">
+                {"// new skills whenever I build something worth shipping"}
+              </span>
+              <Link href="/skills" className="sx-btn sx-btn-neon">
+                See full library →
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <Footer />
-    </div>
+        {/* ABOUT */}
+        <section className="sx-section" id="about">
+          <div className="sx-section-head">
+            <div className="sx-section-num">§02</div>
+            <div>
+              <div className="sx-section-kicker">The human shipping this</div>
+              <h2 className="sx-section-title">
+                Built by an <span style={{ fontStyle: "italic", color: "var(--neon-1)" }}>engineer</span>.
+              </h2>
+            </div>
+            <p className="sx-section-desc">
+              I&apos;m a software engineer who builds AI automation systems with
+              Claude. I teach non-technical and semi-technical people how to
+              build real AI systems that actually work — not another prompt bro.
+            </p>
+          </div>
+          <div className="sx-section-body">
+            <div className="sx-about-grid">
+              <div className="sx-about-copy">
+                <p>
+                  The skills on this site are free. They&apos;re the same agents,
+                  automations, and workflows I use myself — packaged so you can
+                  install them into Claude and run them on day one.
+                </p>
+                <p>
+                  No prompt-engineering hustle content. No &quot;6-figure agency&quot;
+                  nonsense. Just systems that work on Monday morning.
+                </p>
+              </div>
+              <div className="sx-about-card">
+                <div className="sx-about-bar">
+                  <span>cv.txt</span>
+                  <span style={{ opacity: 0.5 }}>last saved today</span>
+                </div>
+                {(
+                  [
+                    ["role", "Software engineer + creator"],
+                    ["stack", "Claude · Next.js · TypeScript · Python"],
+                    ["teaching", "AI for operators + builders"],
+                    ["skills shipped", `${SKILLS.filter((s) => s.available).length} & counting`],
+                    ["based in", "The internet"],
+                  ] as const
+                ).map(([k, v]) => (
+                  <div key={k} className="sx-about-row">
+                    <span className="sx-about-k">{k}</span>
+                    <span className="sx-about-v">{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SOCIALS */}
+        <section className="sx-section">
+          <div className="sx-section-head">
+            <div className="sx-section-num">§03</div>
+            <div>
+              <div className="sx-section-kicker">Follow along</div>
+              <h2 className="sx-section-title">Three feeds. One brain.</h2>
+            </div>
+            <p className="sx-section-desc">
+              Same ideas, three places. Pick whichever you actually check.
+            </p>
+          </div>
+          <div className="sx-section-body">
+            <Socials />
+          </div>
+        </section>
+
+        {/* BIG CTA */}
+        <section className="sx-newsletter" id="newsletter">
+          <div className="sx-newsletter-inner">
+            <div className="sx-newsletter-kicker">◆ free · day 1 usable</div>
+            <h2 className="sx-newsletter-title">
+              Real Claude skills.
+              <br />
+              <span className="sx-rainbow">Drop them in.</span>
+            </h2>
+            <p className="sx-newsletter-sub">
+              Agents, automations, and workflows packaged as Claude skills you
+              can install and run on day one. Free forever.
+            </p>
+            <div className="sx-newsletter-cta">
+              <Link href="/skills" className="sx-btn sx-btn-neon">
+                Browse the skills →
+              </Link>
+            </div>
+            <div className="sx-newsletter-foot">
+              {"// unsubscribe whenever — link in every email"}
+            </div>
+          </div>
+        </section>
+
+        <Footer />
+      </div>
+    </>
   );
 }

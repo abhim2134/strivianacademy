@@ -51,7 +51,8 @@ export default function UnlockModal({
       }
       setState({
         kind: "success",
-        recipient: typeof data.recipient === "string" ? data.recipient : email.trim(),
+        recipient:
+          typeof data.recipient === "string" ? data.recipient : email.trim(),
         emailSent: Boolean(data.emailSent),
       });
     } catch {
@@ -61,122 +62,168 @@ export default function UnlockModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center"
+      className="sx-modal-backdrop"
       role="dialog"
       aria-modal="true"
       aria-labelledby="unlock-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
     >
-      <button
-        aria-label="Close"
-        onClick={onClose}
-        className="absolute inset-0 bg-ink/80 backdrop-blur-md"
-      />
-      <div className="relative w-full sm:max-w-lg bg-ink-2 border hairline sm:rounded-3xl rounded-t-3xl p-6 sm:p-8 m-0 sm:m-4 animate-[rise_0.45s_cubic-bezier(0.2,0.8,0.2,1)_both]">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 h-9 w-9 rounded-full border hairline bg-ink hover:bg-bone/10 flex items-center justify-center text-bone-dim hover:text-bone transition-colors"
-          aria-label="Close"
-        >
-          ✕
-        </button>
+      <div className="sx-modal">
+        <div className="sx-modal-bar">
+          <span
+            className="sx-term-dot"
+            style={{ background: "var(--neon-1)" }}
+          />
+          <span
+            className="sx-term-dot"
+            style={{ background: "var(--neon-2)" }}
+          />
+          <span
+            className="sx-term-dot"
+            style={{ background: "var(--neon-3)" }}
+          />
+          <span style={{ marginLeft: 8 }}>unlock · {skill.id}</span>
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="sx-modal-close"
+          >
+            ✕
+          </button>
+        </div>
 
-        {state.kind !== "success" && (
-          <>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-bone-dim">
-              Unlock · {skill.id}
-            </div>
-            <h2
-              id="unlock-title"
-              className="mt-3 font-display text-3xl sm:text-4xl tracking-tight font-medium leading-tight pr-8"
-            >
-              {skill.title}
-            </h2>
-            <p className="mt-2 text-bone-dim text-sm">
-              Drop your email and I&apos;ll send you the files.
-            </p>
+        <div className="sx-modal-body">
+          {state.kind !== "success" && (
+            <>
+              <div className="sx-modal-kicker">▸ enter email to unlock</div>
+              <h2 id="unlock-title" className="sx-modal-title">
+                {skill.title}
+              </h2>
+              <p className="sx-modal-sub">
+                Drop your email and I&apos;ll send you the {skill.files.length}{" "}
+                files.
+              </p>
 
-            <form onSubmit={submit} className="mt-6 space-y-3">
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                autoFocus
-                disabled={state.kind === "loading"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@domain.com"
-                className="w-full rounded-2xl border hairline bg-ink px-5 py-4 text-base text-bone placeholder:text-bone-dim focus:border-acid focus:outline-none transition-colors"
-              />
-              <button
-                type="submit"
-                disabled={state.kind === "loading"}
-                className="w-full rounded-2xl bg-acid text-ink px-5 py-4 font-semibold hover:bg-bone transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                {state.kind === "loading" ? (
-                  <span className="inline-flex items-center gap-2">
-                    <span className="h-4 w-4 border-2 border-ink border-t-transparent rounded-full animate-spin" />
-                    Sending…
-                  </span>
-                ) : (
-                  "Send me the skill →"
+              <form onSubmit={submit} className="sx-modal-form">
+                <label htmlFor="email" style={{ display: "none" }}>
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  autoFocus
+                  disabled={state.kind === "loading"}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@domain.com"
+                  className="sx-modal-input"
+                />
+                <button
+                  type="submit"
+                  disabled={state.kind === "loading"}
+                  className="sx-modal-submit"
+                >
+                  {state.kind === "loading"
+                    ? "Sending…"
+                    : "Send me the skill →"}
+                </button>
+                {state.kind === "error" && (
+                  <p className="sx-modal-error">{state.message}</p>
                 )}
-              </button>
-              {state.kind === "error" && (
-                <p className="text-rust text-sm">{state.message}</p>
-              )}
-            </form>
+              </form>
 
-            <p className="mt-5 text-[11px] text-bone-dim font-mono leading-relaxed">
-              By entering your email you&apos;ll also get future communications
-              from Strivian. Unsubscribe anytime — link in every email.
-            </p>
-          </>
-        )}
+              <p className="sx-modal-foot">
+                {"// entering your email adds you to the Strivian list. Unsubscribe anytime — link in every email."}
+              </p>
+            </>
+          )}
 
-        {state.kind === "success" && (
-          <div>
-            <div className="h-12 w-12 rounded-2xl bg-acid text-ink flex items-center justify-center mb-5 text-2xl font-bold">
-              ✓
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl tracking-tight font-medium">
-              Check your inbox.
-            </h2>
-            <p className="mt-3 text-bone-dim">
-              I sent <span className="text-bone font-mono">{state.recipient}</span>{" "}
-              the two skill files.
-            </p>
+          {state.kind === "success" && (
+            <>
+              <div className="sx-modal-success-icon">✓</div>
+              <h2 className="sx-modal-title">Check your inbox.</h2>
+              <p className="sx-modal-sub">
+                I sent{" "}
+                <span className="sx-mono" style={{ color: "var(--ink)" }}>
+                  {state.recipient}
+                </span>{" "}
+                the skill files.
+              </p>
 
-            <div className="mt-6 rounded-2xl border hairline bg-ink p-5 text-sm">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-bone-dim mb-3">
-                Once you have them
+              <div
+                style={{
+                  marginTop: 20,
+                  border: "1px solid var(--line)",
+                  background: "var(--bg)",
+                  padding: "16px 18px",
+                }}
+              >
+                <div
+                  className="sx-mono"
+                  style={{
+                    fontSize: 10.5,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "var(--ink-dim)",
+                    marginBottom: 10,
+                  }}
+                >
+                  once you have them
+                </div>
+                <p
+                  style={{
+                    margin: 0,
+                    color: "var(--ink)",
+                    fontSize: 14,
+                    lineHeight: 1.55,
+                  }}
+                >
+                  Open Claude Code, drop the files into chat, and say:
+                </p>
+                <pre className="sx-modal-code">
+{`Create a Claude skill from these files.`}
+                </pre>
+                <p
+                  style={{
+                    margin: "10px 0 0",
+                    color: "var(--ink-dim)",
+                    fontSize: 12,
+                    lineHeight: 1.55,
+                  }}
+                >
+                  Claude sets up the skill folder. Restart Claude Code and invoke
+                  it by describing what you want.
+                </p>
               </div>
-              <p className="text-bone/90 leading-relaxed">
-                Open Claude Code, drop both files into the chat, and say:
-              </p>
-              <pre className="mt-3 text-acid text-[12px] overflow-auto whitespace-pre-wrap">
-{`Create a Claude skill from these two files.`}
-              </pre>
-              <p className="mt-3 text-bone-dim text-[12px] leading-relaxed">
-                Claude will set up the skill folder for you. Restart Claude
-                Code and invoke it by describing what you want.
-              </p>
-            </div>
 
-            <p className="mt-5 text-[11px] text-bone-dim font-mono">
-              Didn&apos;t arrive in 2 min? Check spam, or DM @abhi_ai26.
-            </p>
+              <p className="sx-modal-foot">
+                {"// didn't arrive in 2 min? check spam, or DM @abhi_ai26."}
+              </p>
 
-            <button
-              onClick={onClose}
-              className="mt-4 w-full text-sm text-bone-dim hover:text-bone"
-            >
-              Close
-            </button>
-          </div>
-        )}
+              <button
+                onClick={onClose}
+                style={{
+                  marginTop: 14,
+                  width: "100%",
+                  background: "transparent",
+                  border: "1px solid var(--line-strong)",
+                  color: "var(--ink-dim)",
+                  padding: "12px",
+                  fontFamily: "var(--font-mono), monospace",
+                  fontSize: 12,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                }}
+              >
+                Close
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
