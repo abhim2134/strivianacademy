@@ -109,7 +109,6 @@ export default function Home() {
                 {(
                   [
                     ["role", "Software engineer + creator"],
-                    ["stack", "Claude · Next.js · TypeScript · Python"],
                     ["teaching", "AI for operators + builders"],
                     ["skills shipped", `${SKILLS.filter((s) => s.available).length} & counting`],
                     ["based in", "The internet"],
