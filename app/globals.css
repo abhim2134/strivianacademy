@@ -214,6 +214,7 @@ a { color: inherit; }
   background: linear-gradient(90deg, var(--neon-1), var(--neon-2));
   -webkit-background-clip: text; background-clip: text;
   color: transparent;
+  padding-bottom: 0.14em;
 }
 .sx-hero-grid {
   display: grid; grid-template-columns: 1.1fr 1fr;
