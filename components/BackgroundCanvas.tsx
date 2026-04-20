@@ -314,15 +314,6 @@ export default function BackgroundCanvas({
         ctx.stroke();
       }
 
-      const spot = ctx.createRadialGradient(mx, my, 0, mx, my, 220);
-      spot.addColorStop(
-        0,
-        `rgba(${c1[0]},${c1[1]},${c1[2]},${0.15 * intensity})`
-      );
-      spot.addColorStop(1, `rgba(${bg[0]},${bg[1]},${bg[2]},0)`);
-      ctx.fillStyle = spot;
-      ctx.fillRect(0, 0, state.w, state.h);
-
       const vg = ctx.createRadialGradient(
         state.w / 2,
         state.h / 2,
