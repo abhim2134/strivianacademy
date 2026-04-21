@@ -39,24 +39,6 @@ export default function SkillsPage() {
               Real systems you can drop into Claude today. New ones ship
               whenever I build something worth sharing.
             </p>
-            <div className="sx-skills-stats">
-              <div className="sx-stat">
-                <div className="sx-stat-k">Total</div>
-                <div className="sx-stat-v">{SKILLS.length}</div>
-              </div>
-              <div className="sx-stat">
-                <div className="sx-stat-k">Available</div>
-                <div className="sx-stat-v">{available.length}</div>
-              </div>
-              <div className="sx-stat">
-                <div className="sx-stat-k">Coming</div>
-                <div className="sx-stat-v">{upcoming.length}</div>
-              </div>
-              <div className="sx-stat sx-stat-accent">
-                <div className="sx-stat-k">Updated</div>
-                <div className="sx-stat-v">today</div>
-              </div>
-            </div>
           </div>
         </section>
 
