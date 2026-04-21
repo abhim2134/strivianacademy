@@ -63,12 +63,12 @@ export default function Nav({ page = "home" }: Props) {
         >
           /skills
         </Link>
-        <a href="#about" className="sx-nav-link" onClick={close}>
+        <Link href="/#about" className="sx-nav-link" onClick={close}>
           /about
-        </a>
-        <a href="#follow" className="sx-nav-link" onClick={close}>
+        </Link>
+        <Link href="/#follow" className="sx-nav-link" onClick={close}>
           /follow
-        </a>
+        </Link>
         <Link href="/skills" className="sx-btn sx-btn-primary" onClick={close}>
           Free skills <span style={{ marginLeft: 6 }}>→</span>
         </Link>

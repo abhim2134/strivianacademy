@@ -177,22 +177,6 @@ export default function BackgroundCanvas({
       return (a + b) * 1.2 + scrollRot;
     };
 
-    const drawGrid = (scrollN: number) => {
-      const horizon = state.h * (0.62 - scrollN * 0.1);
-      const baseA = isLight ? 0.07 : 0.08;
-      ctx.strokeStyle = `rgba(${c1[0]},${c1[1]},${c1[2]},${baseA * intensity})`;
-      ctx.lineWidth = 1;
-      const cols = 24;
-      const vanishX = state.w / 2;
-      for (let i = -cols; i <= cols; i++) {
-        const x0 = state.w / 2 + (i / cols) * state.w * 1.3;
-        ctx.beginPath();
-        ctx.moveTo(x0, state.h + 40);
-        ctx.lineTo(vanishX, horizon);
-        ctx.stroke();
-      }
-    };
-
     let last = performance.now();
     state.t0 = last;
 
@@ -219,8 +203,6 @@ export default function BackgroundCanvas({
       const fade = isLight ? 0.14 : 0.09;
       ctx.fillStyle = `rgba(${bg[0]},${bg[1]},${bg[2]},${fade})`;
       ctx.fillRect(0, 0, state.w, state.h);
-
-      drawGrid(scrollN);
 
       for (let i = state.ripples.length - 1; i >= 0; i--) {
         const rp = state.ripples[i];
