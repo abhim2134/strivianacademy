@@ -97,8 +97,8 @@ export default function Home() {
                   install them into Claude and run them on day one.
                 </p>
                 <p>
-                  No prompt-engineering hustle content. No &quot;6-figure agency&quot;
-                  nonsense. Just systems that work on Monday morning.
+                  No prompt-engineering hustle content. Just systems that work
+                  on Monday morning.
                 </p>
               </div>
               <div className="sx-about-card">
