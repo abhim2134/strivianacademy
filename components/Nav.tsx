@@ -30,7 +30,7 @@ export default function Nav({ page = "home" }: Props) {
             strivian
             <span style={{ opacity: 0.55 }}>.academy</span>
           </span>
-          <span className="sx-logo-sub">/ real ai systems with claude</span>
+          <span className="sx-logo-sub">/ real ai systems</span>
         </span>
       </Link>
 

@@ -23,13 +23,6 @@ export default function Hero() {
           <span className="sx-chip sx-chip-live">
             <span className="sx-live-dot" /> LIVE
           </span>
-          <span className="sx-meta-text">
-            <span style={{ opacity: 0.55 }}>2 free skills</span>
-            <span className="sx-meta-sep">/</span>
-            <span style={{ opacity: 0.55 }}>built with claude</span>
-            <span className="sx-meta-sep">/</span>
-            <span style={{ opacity: 0.55 }}>day 1 usable</span>
-          </span>
           <span
             style={{ marginLeft: "auto" }}
             className="sx-meta-text sx-meta-dim"
@@ -46,7 +39,7 @@ export default function Hero() {
         <div className="sx-hero-grid">
           <p className="sx-hero-sub">
             Free skills, automations, and workflows built by a software engineer
-            using Claude — plus learnings on how to be a real builder.{" "}
+            — plus learnings on how to be a real builder.{" "}
             <span style={{ color: "var(--ink)", fontStyle: "italic" }}>
               Not another prompt bro.
             </span>

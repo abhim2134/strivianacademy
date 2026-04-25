@@ -83,9 +83,9 @@ export default function Home() {
               </h2>
             </div>
             <p className="sx-section-desc">
-              I&apos;m a software engineer who builds AI automation systems with
-              Claude. I teach non-technical and semi-technical people how to
-              build real AI systems that actually work — not another prompt bro.
+              I&apos;m a software engineer who builds AI automation systems. I
+              teach non-technical and semi-technical people how to build real AI
+              systems that actually work — not another prompt bro.
             </p>
           </div>
           <div className="sx-section-body">
@@ -111,7 +111,6 @@ export default function Home() {
                     ["role", "Software engineer + creator"],
                     ["teaching", "AI for operators + builders"],
                     ["skills shipped", `${SKILLS.filter((s) => s.available).length} & counting`],
-                    ["based in", "The internet"],
                   ] as const
                 ).map(([k, v]) => (
                   <div key={k} className="sx-about-row">
