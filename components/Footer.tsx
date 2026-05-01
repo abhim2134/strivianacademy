@@ -33,7 +33,7 @@ export default function Footer() {
         />
       </div>
       <div className="sx-footer-base">
-        <span>© {new Date().getFullYear()} Strivian LLC.</span>
+        <span>built by Abhi</span>
         <span>strivianacademy.com</span>
         <span>@abhi_ai26</span>
       </div>

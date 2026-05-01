@@ -32,8 +32,8 @@ export default function Hero() {
         </div>
 
         <h1 className="sx-hero-title">
-          <span className="sx-h-line">From vibe coder</span>
-          <span className="sx-h-line sx-h-line-accent">to AI engineer.</span>
+          <span className="sx-h-line">real</span>
+          <span className="sx-h-line sx-h-line-accent">ai systems.</span>
         </h1>
 
         <div className="sx-hero-grid">
