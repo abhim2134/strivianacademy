@@ -7,7 +7,7 @@ import { verifyUnsubscribeToken } from "@/lib/unsubscribe";
 import { unsubscribeContact } from "@/lib/audience";
 
 export const metadata: Metadata = {
-  title: "Unsubscribed · Strivian Academy",
+  title: "Unsubscribed · @abhi_ai26",
   robots: { index: false, follow: false },
 };
 
@@ -60,7 +60,7 @@ export default async function UnsubscribePage({
                     {shownEmail}
                   </span>{" "}
                   has been removed from the list. You won&apos;t receive any
-                  more drops from Strivian Academy.
+                  more drops from @abhi_ai26.
                 </p>
                 <p
                   className="sx-mono"
@@ -115,10 +115,10 @@ export default async function UnsubscribePage({
                   {errorMessage || "Try again in a minute."} If it keeps
                   happening, email{" "}
                   <a
-                    href="mailto:abhi@strivianacademy.com"
+                    href="mailto:abhi@amullapudi.com"
                     style={{ color: "var(--neon-1)" }}
                   >
-                    abhi@strivianacademy.com
+                    abhi@amullapudi.com
                   </a>
                   .
                 </p>

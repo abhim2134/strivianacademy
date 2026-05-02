@@ -23,13 +23,10 @@ export default function Nav({ page = "home" }: Props) {
     <nav className={"sx-nav" + (open ? " is-menu-open" : "")}>
       <Link href="/" className="sx-logo" onClick={close}>
         <span className="sx-logo-mark">
-          <span className="sx-logo-mark-inner">S</span>
+          <span className="sx-logo-mark-inner">@</span>
         </span>
         <span className="sx-logo-text">
-          <span className="sx-logo-name">
-            strivian
-            <span style={{ opacity: 0.55 }}>.academy</span>
-          </span>
+          <span className="sx-logo-name">abhi_ai26</span>
           <span className="sx-logo-sub">/ real ai systems</span>
         </span>
       </Link>

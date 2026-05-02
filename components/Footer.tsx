@@ -28,13 +28,13 @@ export default function Footer() {
         <FooterCol
           title="Contact"
           items={[
-            { label: "abhi@strivianacademy.com", href: "mailto:abhi@strivianacademy.com" },
+            { label: "abhi@amullapudi.com", href: "mailto:abhi@amullapudi.com" },
           ]}
         />
       </div>
       <div className="sx-footer-base">
         <span>built by Abhi</span>
-        <span>strivianacademy.com</span>
+        <span>amullapudi.com</span>
         <span>@abhi_ai26</span>
       </div>
     </footer>

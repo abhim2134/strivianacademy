@@ -136,7 +136,7 @@ export default function UnlockModal({
               </form>
 
               <p className="sx-modal-foot">
-                {"// entering your email adds you to the Strivian list. Unsubscribe anytime — link in every email."}
+                {"// entering your email adds you to the list. Unsubscribe anytime — link in every email."}
               </p>
             </>
           )}

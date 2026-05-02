@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   STRIVIAN ACADEMY — "Nocturne" theme
+   @abhi_ai26 — "Nocturne" theme
    Deep space + neon editorial.
    ============================================================ */
 
@@ -173,13 +173,13 @@ a { color: inherit; }
 .sx-btn-ghost { color: var(--ink-dim); }
 
 /* --------- HERO --------- */
-.sx-hero { padding: 72px 40px 96px; position: relative; }
+.sx-hero { padding: 32px 40px 96px; position: relative; }
 .sx-hero-inner { max-width: 1440px; margin: 0 auto; }
 .sx-hero-meta {
   display: flex; align-items: center; gap: 16px;
   font-family: var(--font-mono), 'JetBrains Mono', monospace; font-size: 11px;
   letter-spacing: 0.12em; text-transform: uppercase;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 .sx-meta-sep { color: var(--ink-dim); opacity: 0.5; }
@@ -218,7 +218,7 @@ a { color: inherit; }
 }
 .sx-hero-grid {
   display: grid; grid-template-columns: 1.1fr 1fr;
-  gap: 80px; margin-top: 64px; align-items: end;
+  gap: 80px; margin-top: 48px; align-items: end;
 }
 .sx-hero-sub {
   font-family: var(--font-body), 'Inter', sans-serif; font-size: 20px;
@@ -556,15 +556,15 @@ a { color: inherit; }
   .sx-logo-mark { width: 34px; height: 34px; font-size: 22px; }
   .sx-logo-name { font-size: 15px; }
 
-  .sx-hero { padding: 40px 18px 64px; }
+  .sx-hero { padding: 20px 18px 64px; }
   .sx-hero-title { font-size: clamp(46px, 13vw, 96px); }
   .sx-hero-meta {
     gap: 10px;
     font-size: 10px;
-    margin-bottom: 28px;
+    margin-bottom: 18px;
   }
   .sx-hero-meta > *:last-child { margin-left: 0 !important; }
-  .sx-hero-grid { gap: 36px; margin-top: 36px; }
+  .sx-hero-grid { gap: 36px; margin-top: 28px; }
   .sx-hero-sub { font-size: 17px; }
   .sx-cta-col .sx-btn { min-width: 0; width: 100%; }
   .sx-term-body { padding: 14px; font-size: 11.5px; line-height: 1.65; }

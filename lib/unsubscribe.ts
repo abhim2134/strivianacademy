@@ -8,7 +8,7 @@ function secret(): string {
 
 function siteUrl(): string {
   return (
-    process.env.SITE_URL?.replace(/\/$/, "") ?? "https://strivianacademy.com"
+    process.env.SITE_URL?.replace(/\/$/, "") ?? "https://amullapudi.com"
   );
 }
 

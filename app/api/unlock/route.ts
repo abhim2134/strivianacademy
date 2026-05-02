@@ -7,7 +7,7 @@ import { unsubscribeUrl } from "@/lib/unsubscribe";
 
 export const runtime = "nodejs";
 
-const FROM = "Abhi · Strivian Academy <abhi@strivianacademy.com>";
+const FROM = "Abhi <abhi@amullapudi.com>";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
   const unsubUrl = unsubscribeUrl(cleanEmail);
 
   const listUnsubscribeHeaders = {
-    "List-Unsubscribe": `<${unsubUrl}>, <mailto:abhi@strivianacademy.com?subject=unsubscribe>`,
+    "List-Unsubscribe": `<${unsubUrl}>, <mailto:abhi@amullapudi.com?subject=unsubscribe>`,
     "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
   };
 
@@ -109,7 +109,7 @@ function renderUserEmail(title: string, fileCount: number, unsubUrl: string) {
   <div style="background:#0a0a0b;color:#f4f1ea;font-family:ui-sans-serif,system-ui,sans-serif;padding:32px 24px;max-width:600px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px">
       <span style="display:inline-block;width:8px;height:8px;background:#d4ff3a;border-radius:999px"></span>
-      <span style="font-weight:600">Strivian Academy</span>
+      <span style="font-weight:600">@abhi_ai26</span>
     </div>
     <h1 style="font-size:32px;line-height:1.1;margin:0 0 8px 0;letter-spacing:-0.02em">
       ${title}
@@ -137,10 +137,9 @@ function renderUserEmail(title: string, fileCount: number, unsubUrl: string) {
     <hr style="border:none;border-top:1px solid rgba(244,241,234,0.08);margin:32px 0 16px 0" />
     <p style="margin:0;color:#6e6a64;font-size:11px;line-height:1.6">
       You received this email because you requested a free skill from
-      <a href="https://strivianacademy.com" style="color:#9a9691;text-decoration:underline">strivianacademy.com</a>.
+      <a href="https://amullapudi.com" style="color:#9a9691;text-decoration:underline">amullapudi.com</a>.
       You&rsquo;ll also get a heads-up when new free skills drop.<br/>
       <a href="${unsubUrl}" style="color:#9a9691;text-decoration:underline">Unsubscribe</a>
-      · Strivian LLC
     </p>
   </div>
   `;

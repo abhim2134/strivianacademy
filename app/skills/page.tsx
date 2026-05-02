@@ -7,7 +7,7 @@ import SkillCard from "@/components/SkillCard";
 import { SKILLS } from "@/lib/skills";
 
 export const metadata: Metadata = {
-  title: "Free Claude Skills — Strivian Academy",
+  title: "Free Claude Skills — @abhi_ai26",
   description:
     "Free, ready-to-install Claude skills built by a software engineer. Drop your email, get the files.",
 };
@@ -28,7 +28,7 @@ export default function SkillsPage() {
         <section className="sx-skills-hero">
           <div className="sx-skills-hero-inner">
             <div className="sx-skills-crumb">
-              strivianacademy.com{" "}
+              amullapudi.com{" "}
               <span style={{ opacity: 0.4 }}>/</span>{" "}
               <span style={{ color: "var(--neon-1)" }}>skills</span>
             </div>

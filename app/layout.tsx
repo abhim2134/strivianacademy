@@ -33,20 +33,20 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://strivianacademy.com"),
-  title: "Strivian Academy — Real AI systems with Claude",
+  metadataBase: new URL("https://amullapudi.com"),
+  title: "@abhi_ai26 — real ai systems with Claude",
   description:
     "Free systems built by a software engineer using Claude — not another prompt bro.",
   openGraph: {
-    title: "Strivian Academy",
+    title: "@abhi_ai26",
     description:
       "Real AI systems with Claude. Free skills from a software engineer.",
     type: "website",
-    url: "https://strivianacademy.com",
+    url: "https://amullapudi.com",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Strivian Academy",
+    title: "@abhi_ai26",
     description:
       "Real AI systems with Claude. Free skills from a software engineer.",
   },
