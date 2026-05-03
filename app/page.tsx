@@ -1,171 +1,80 @@
 import Link from "next/link";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
-import Ticker from "@/components/Ticker";
-import Hero from "@/components/Hero";
 import BackgroundCanvas from "@/components/BackgroundCanvas";
-import { Socials } from "@/components/Socials";
-import { SKILLS } from "@/lib/skills";
+
+const TikTokGlyph = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
+    <path d="M16 3 C16 6 18 8 21 8 V11 C19 11 17.5 10.5 16 9.5 V15.5 C16 19 13.5 21 10.5 21 C7.5 21 5 18.8 5 15.8 C5 12.8 7.5 10.5 10.5 10.5 C11 10.5 11.5 10.6 12 10.7 V14 C11.5 13.8 11 13.7 10.5 13.7 C9.3 13.7 8.3 14.6 8.3 15.8 C8.3 17 9.3 18 10.5 18 C11.7 18 12.7 17 12.7 15.8 V3 Z" />
+  </svg>
+);
+const IGGlyph = () => (
+  <svg
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={1.8}
+    aria-hidden
+  >
+    <rect x="3" y="3" width="18" height="18" rx="4" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+  </svg>
+);
+const YTGlyph = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
+    <rect x="2" y="5" width="20" height="14" rx="2" />
+    <path d="M10 9 L15 12 L10 15 Z" fill="var(--bg)" />
+  </svg>
+);
+
+const SOCIALS = [
+  { label: "TikTok", href: "https://tiktok.com/@abhi_ai26", Icon: TikTokGlyph },
+  { label: "Instagram", href: "https://instagram.com/abhi_ai26", Icon: IGGlyph },
+  { label: "YouTube", href: "https://youtube.com/@abhi_ai26", Icon: YTGlyph },
+];
 
 export default function Home() {
   return (
     <>
       <BackgroundCanvas />
-      <div className="sx-wrap">
-        <Ticker />
-        <Nav page="home" />
-
-        <Hero />
-
-        {/* FEATURED SKILLS */}
-        <section className="sx-section">
-          <div className="sx-section-head">
-            <div className="sx-section-num">§01</div>
-            <div>
-              <div className="sx-section-kicker">The library</div>
-              <h2 className="sx-section-title">Real Claude skills. Drop them in.</h2>
-            </div>
-            <p className="sx-section-desc">
-              Agents, automations, and workflows packaged as Claude skills you
-              can install and run on day one. New ones drop whenever I build
-              something worth sharing.
-            </p>
+      <main className="sx-bio">
+        <div className="sx-bio-inner">
+          <div className="sx-bio-brand">
+            <span className="sx-logo-mark">
+              <span className="sx-logo-mark-inner">@</span>
+            </span>
+            <span className="sx-bio-name">abhi_ai26</span>
           </div>
-          <div className="sx-section-body">
-            <div className="sx-featured-grid">
-              {SKILLS.map((s, i) => (
-                <Link
-                  key={s.id}
-                  href="/skills"
-                  className={"sx-featured" + (i === 0 ? " sx-featured-hero" : "")}
+
+          <h1 className="sx-bio-title">real ai systems.</h1>
+          <p className="sx-bio-sub">free skills, built by an engineer.</p>
+
+          <Link href="/skills" className="sx-btn sx-btn-neon sx-bio-cta">
+            Free Claude skills <span>→</span>
+          </Link>
+
+          <div className="sx-bio-socials">
+            <div className="sx-bio-socials-row">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="sx-bio-social"
                 >
-                  <div className="sx-featured-top">
-                    <div className="sx-featured-glyph">{s.glyph}</div>
-                    <span
-                      className={
-                        "sx-tier" + (s.available ? "" : " sx-tier-paid")
-                      }
-                    >
-                      {s.available ? "FREE" : "SOON"}
-                    </span>
-                  </div>
-                  <div className="sx-featured-meta">
-                    {s.category} · {s.readTime}
-                  </div>
-                  <div className="sx-featured-title">{s.title}</div>
-                  <p className="sx-featured-desc">{s.tagline}</p>
-                  <div className="sx-featured-foot">
-                    <span>{s.files.length} files · by email</span>
-                    <span>view →</span>
-                  </div>
-                </Link>
+                  <Icon />
+                </a>
               ))}
-            </div>
-            <div className="sx-featured-after">
-              <span className="sx-meta-dim">
-                {"// new skills whenever I build something worth shipping"}
-              </span>
-              <Link href="/skills" className="sx-btn sx-btn-neon">
-                See full library →
-              </Link>
+              <span className="sx-bio-handle">@abhi_ai26</span>
             </div>
           </div>
-        </section>
 
-        {/* ABOUT */}
-        <section className="sx-section" id="about">
-          <div className="sx-section-head">
-            <div className="sx-section-num">§02</div>
-            <div>
-              <div className="sx-section-kicker">The human shipping this</div>
-              <h2 className="sx-section-title">
-                Built by an <span style={{ fontStyle: "italic", color: "var(--neon-1)" }}>engineer</span>.
-              </h2>
-            </div>
-            <p className="sx-section-desc">
-              I&apos;m a software engineer who builds AI automation systems. I
-              teach non-technical and semi-technical people how to build real AI
-              systems that actually work — not another prompt bro.
-            </p>
-          </div>
-          <div className="sx-section-body">
-            <div className="sx-about-grid">
-              <div className="sx-about-copy">
-                <p>
-                  The skills on this site are free. They&apos;re the same agents,
-                  automations, and workflows I use myself — packaged so you can
-                  install them into Claude and run them on day one.
-                </p>
-                <p>
-                  No prompt-engineering hustle content. Just systems that work
-                  on Monday morning.
-                </p>
-              </div>
-              <div className="sx-about-card">
-                <div className="sx-about-bar">
-                  <span>cv.txt</span>
-                  <span style={{ opacity: 0.5 }}>last saved today</span>
-                </div>
-                {(
-                  [
-                    ["role", "Software engineer + creator"],
-                    ["teaching", "AI for operators + builders"],
-                    ["skills shipped", `${SKILLS.filter((s) => s.available).length} & counting`],
-                  ] as const
-                ).map(([k, v]) => (
-                  <div key={k} className="sx-about-row">
-                    <span className="sx-about-k">{k}</span>
-                    <span className="sx-about-v">{v}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SOCIALS */}
-        <section className="sx-section">
-          <div className="sx-section-head">
-            <div className="sx-section-num">§03</div>
-            <div>
-              <div className="sx-section-kicker">Follow along</div>
-              <h2 className="sx-section-title">Three feeds. One brain.</h2>
-            </div>
-            <p className="sx-section-desc">
-              Same ideas, three places. Pick whichever you actually check.
-            </p>
-          </div>
-          <div className="sx-section-body">
-            <Socials />
-          </div>
-        </section>
-
-        {/* BIG CTA */}
-        <section className="sx-newsletter" id="newsletter">
-          <div className="sx-newsletter-inner">
-            <div className="sx-newsletter-kicker">◆ free · day 1 usable</div>
-            <h2 className="sx-newsletter-title">
-              Real Claude skills.
-              <br />
-              <span className="sx-rainbow">Drop them in.</span>
-            </h2>
-            <p className="sx-newsletter-sub">
-              Agents, automations, and workflows packaged as Claude skills you
-              can install and run on day one. Free forever.
-            </p>
-            <div className="sx-newsletter-cta">
-              <Link href="/skills" className="sx-btn sx-btn-neon">
-                Browse the skills →
-              </Link>
-            </div>
-            <div className="sx-newsletter-foot">
-              {"// unsubscribe whenever — link in every email"}
-            </div>
-          </div>
-        </section>
-
-        <Footer />
-      </div>
+          <div className="sx-bio-foot">amullapudi.com</div>
+        </div>
+      </main>
     </>
   );
 }
