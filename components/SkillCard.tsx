@@ -6,11 +6,43 @@ import UnlockModal from "./UnlockModal";
 
 type Props = {
   skill: Skill;
-  variant?: "feature" | "card";
+  variant?: "feature" | "card" | "row";
 };
 
 export default function SkillCard({ skill, variant = "card" }: Props) {
   const [open, setOpen] = useState(false);
+
+  if (variant === "row") {
+    const disabled = !skill.available;
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => !disabled && setOpen(true)}
+          disabled={disabled}
+          className={"sx-bio-row" + (disabled ? " is-disabled" : "")}
+        >
+          <span className="sx-bio-row-glyph">{skill.glyph}</span>
+          <span className="sx-bio-row-body">
+            <span className="sx-bio-row-head">
+              <span className="sx-bio-row-title">{skill.title}</span>
+              <span
+                className={
+                  "sx-bio-row-tier" +
+                  (skill.available ? " is-free" : " is-soon")
+                }
+              >
+                {skill.available ? "FREE" : "SOON"}
+              </span>
+            </span>
+            <span className="sx-bio-row-sub">{skill.tagline}</span>
+          </span>
+        </button>
+
+        {open && <UnlockModal skill={skill} onClose={() => setOpen(false)} />}
+      </>
+    );
+  }
 
   if (variant === "feature") {
     return (

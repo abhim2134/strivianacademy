@@ -360,6 +360,113 @@ a { color: inherit; }
   color: var(--ink-dim);
 }
 
+/* skills list variant */
+.sx-bio-inner-skills {
+  max-width: 460px;
+  gap: 14px;
+}
+.sx-bio-brand-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.sx-bio-brand-link:hover { border-color: var(--neon-1); }
+.sx-bio-title-sm {
+  font-size: clamp(36px, 10vw, 48px);
+}
+.sx-bio-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+.sx-bio-row {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  padding: 16px;
+  text-align: left;
+  background: var(--glass);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.sx-bio-row:hover:not(.is-disabled) {
+  border-color: var(--neon-1);
+  background: rgba(0,240,255,0.05);
+}
+.sx-bio-row.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.sx-bio-row-glyph {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 20px;
+  color: var(--neon-1);
+}
+.sx-bio-row-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.sx-bio-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.sx-bio-row-title {
+  font-family: var(--font-ui), 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.sx-bio-row-tier {
+  flex-shrink: 0;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  padding: 3px 7px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-dim);
+}
+.sx-bio-row-tier.is-free {
+  color: var(--neon-1);
+  border-color: var(--neon-1);
+}
+.sx-bio-row-sub {
+  font-family: var(--font-body), 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-dim);
+}
+.sx-bio-back {
+  margin-top: 14px;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-dim);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.sx-bio-back:hover { color: var(--neon-1); }
+
 /* --------- SECTION SHELL --------- */
 .sx-section { padding: 112px 40px; position: relative; }
 .sx-section-head {
