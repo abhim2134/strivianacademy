@@ -50,7 +50,7 @@ export default function Home() {
           <h1 className="sx-bio-title">real ai systems.</h1>
           <p className="sx-bio-sub">free skills, built by an engineer.</p>
 
-          <Link href="/skills" className="sx-btn sx-btn-neon sx-bio-cta">
+          <Link href="/skills" className="sx-btn sx-bio-cta">
             Free Claude skills <span>→</span>
           </Link>
 
