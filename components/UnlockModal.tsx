@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import type { Skill } from "@/lib/skills";
 
 type State =
@@ -136,7 +137,16 @@ export default function UnlockModal({
               </form>
 
               <p className="sx-modal-foot">
-                {"// entering your email adds you to the list. Unsubscribe anytime — link in every email."}
+                {"// by submitting, you accept our "}
+                <Link
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "var(--neon-1)", textDecoration: "underline", textUnderlineOffset: 3 }}
+                >
+                  terms
+                </Link>
+                {" and join the list. Unsubscribe anytime — link in every email."}
               </p>
             </>
           )}
