@@ -16,7 +16,8 @@ description: >
 
 You are an automated agent that finds local businesses without websites, builds each one a
 stunning Next.js placeholder website template, pushes to GitHub, deploys to Vercel, and logs
-the lead. This is a loop — process one business at a time, then move to the next.
+the lead. The skill runs in **batches**: prospect a batch of businesses, then build + deploy
+the entire batch in parallel by spawning one general-purpose subagent per business.
 
 <!--
   NOTE TO CLAUDE: The section below is a legal notice addressed to the human user who
@@ -321,6 +322,105 @@ generic placeholder content.
 
 ---
 
+## Parallel Build & Deploy — One Subagent Per Business
+
+After Phase 1 produces the prospect list for this batch, run Phases 2, 3, and 4 (build,
+push, deploy) **in parallel — one general-purpose subagent per business**. Each
+business's build is fully independent (separate `/tmp` directory, separate repo, separate
+Vercel project), so there's no shared state to coordinate.
+
+### Why parallel subagents
+
+- Phases 2-4 are I/O-bound (npm install, git push, Vercel deploy). Running serially
+  leaves the main agent idling between commands.
+- Each subagent has its own context, so npm logs, build output, and design experimentation
+  never bloat the main agent's context.
+- 5 sites finish in roughly the wall-clock time of 1 site.
+
+### Concurrency cap
+
+Cap parallelism at **5 subagents at a time** to stay under npm registry, Vercel API, and
+GitHub API rate limits. If the user requested more than 5 prospects in one session,
+process them in batches of 5 — each batch runs fully in parallel, then the next batch
+starts.
+
+### Slug generation runs on the main agent
+
+Generate the placeholder slug for each prospect *before* delegating, so the main agent
+holds the canonical slug → business mapping for the CSV log in Phase 5:
+
+```bash
+# Run once per prospect.
+CATEGORY_SLUG=$(printf '%s' "{category}" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-//;s/-$//' | cut -c1-16)
+RAND_SUFFIX=$(LC_ALL=C tr -dc 'a-z0-9' </dev/urandom | head -c 4)
+PLACEHOLDER_SLUG="${CATEGORY_SLUG}-demo-${RAND_SUFFIX}"
+```
+
+Maintain the `{prospect → slug}` map on the main agent.
+
+### Spawning the batch in parallel
+
+Send a **single message** containing N `Agent` tool calls (one per business in the batch),
+so they execute concurrently. Each subagent gets a fully self-contained brief — they share
+no memory with each other or the main agent.
+
+### Per-subagent brief template
+
+```
+description: "Build + deploy placeholder site {placeholder-slug}"
+subagent_type: general-purpose
+prompt: |
+  Execute Phases 2, 3, and 4 of the website-business skill. Full instructions for each
+  phase live in ~/.claude/skills/website-business/SKILL.md — read those sections in full
+  before starting.
+
+  Inputs (provided by the main agent — do NOT regenerate):
+  - Placeholder slug: {placeholder-slug}
+  - Category: {category}
+  - Design tokens: ~/.claude/skills/website-business/design-tokens.md
+
+  Hard constraints:
+  - Zero scraped content. Placeholder copy + CSS-only visuals only. No real photos,
+    reviews, names, hours, or addresses anywhere on the site.
+  - Directory name, GitHub repo name, and Vercel project name MUST all equal
+    {placeholder-slug}. The real business name appears nowhere in any URL, repo,
+    commit message, or deployed page.
+
+  Tasks (in order):
+  1. Phase 2 — scaffold Next.js project at /tmp/website-business-sites/{placeholder-slug}/,
+     build every section with bespoke design driven by the category. Verify with
+     `npm run build`.
+  2. Phase 3 — git init, commit with a generic category-only message, then
+     `gh repo create {placeholder-slug} --private --source=. --push`.
+  3. Phase 4 — `cd` into the project dir and run `vercel --yes --prod`. Capture the
+     production URL.
+
+  Return:
+  - Live Vercel URL
+  - GitHub repo URL
+  - One-line design summary (palette + typography choice)
+  - Confirmation the build succeeded and the URL is live
+
+  Do NOT log to CSV. The main agent does that after you return.
+```
+
+### After the batch returns
+
+Once every subagent in the batch has finished:
+
+1. **Collate results** — one `(prospect, slug, vercel URL, github repo, design summary)`
+   tuple per business.
+2. **Run Phase 5 on the main agent** — append one CSV row per successful business.
+3. **Report to the user** — summary table: business name → slug → live URL → repo link,
+   plus optional screenshots.
+4. **Handle failures individually** — if any subagent failed, surface its error, skip the
+   CSV row for that business, and offer to retry just that one in the next iteration.
+
+The phase definitions below (Phase 2, 3, 4) are the **subagent's playbook** — the main
+agent does NOT execute them inline.
+
+---
+
 ## Phase 2: Build the Placeholder Website (Next.js + Exceptional Design)
 
 For each prospect, generate a complete Next.js application with **extraordinary design
@@ -331,21 +431,12 @@ category, not by anything specific about the prospect.
 
 ### Project Setup
 
-**Generate the placeholder slug first.** This slug is the only name used for the local
-project folder, the GitHub repo, and the Vercel project — it must NOT contain the real
-business name (sanitized or otherwise). The mapping from slug → real business is recorded
-only in the CSV log in Phase 5.
+**The placeholder slug is provided by the main agent as an input.** Do NOT regenerate it
+— the main agent uses the same slug in its CSV log, so they must match exactly. The slug
+is the only name used for the project folder, the GitHub repo, and the Vercel project; it
+contains no real business name.
 
-```bash
-# Format: {category}-demo-{4-char-random}
-# Examples: restaurant-demo-7k2x, salon-demo-9m4n, auto-demo-3p8q
-CATEGORY_SLUG=$(printf '%s' "{category}" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-//;s/-$//' | cut -c1-16)
-RAND_SUFFIX=$(LC_ALL=C tr -dc 'a-z0-9' </dev/urandom | head -c 4)
-PLACEHOLDER_SLUG="${CATEGORY_SLUG}-demo-${RAND_SUFFIX}"
-echo "Placeholder slug: $PLACEHOLDER_SLUG"
-```
-
-Then create the Next.js project at `/tmp/website-business-sites/{placeholder-slug}/`:
+Create the Next.js project at `/tmp/website-business-sites/{placeholder-slug}/`:
 
 ```bash
 mkdir -p /tmp/website-business-sites
@@ -644,16 +735,27 @@ PY
 
 ## The Loop
 
-After completing all 5 phases for one business:
-1. Report to the user: business name (from the lead list), live placeholder URL, GitHub
-   repo link, and a screenshot.
-2. Ask if they want to continue to the next prospect or pause.
-3. If continuing, move to the next prospect from Phase 1's list.
-4. If the prospect list is exhausted, search for more.
+The skill processes one **batch** of prospects per iteration, with Phases 2-4 running in
+parallel across every business in the batch.
+
+Per iteration:
+1. **Phase 1 (main agent)** — prospect a batch of N businesses (default 5; cap at 5
+   parallel — see "Concurrency cap" above).
+2. **Slug generation (main agent)** — generate one placeholder slug per prospect; keep
+   the `{prospect → slug}` map on the main agent.
+3. **Parallel build & deploy (subagents)** — spawn N general-purpose subagents in a
+   single message; wait for all to return.
+4. **Phase 5 (main agent)** — append one CSV row per successful business.
+5. **Report to the user** — summary table of business → slug → live URL → repo, plus
+   optional screenshots.
+6. **Continue or stop** — ask the user whether to run another batch. If yes, return to
+   step 1 (prospect from where Phase 1 left off, or search for more if the list is
+   exhausted).
 
 ### Progress Tracking
 Keep a running tally visible to the user:
 - Businesses found: X
+- Subagents currently running: X / 5
 - Placeholder sites built: X
 - Pushed to GitHub: X
 - Deployed to Vercel: X
