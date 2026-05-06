@@ -6,7 +6,7 @@ import BackgroundCanvas from "@/components/BackgroundCanvas";
 export const metadata: Metadata = {
   title: "Terms · @abhi_ai26",
   description:
-    "Terms of use for strivianacademy.com — operated by Strivian LLC.",
+    "Terms of use for amullapudi.com — operated by Strivian LLC.",
 };
 
 const LAST_UPDATED = "May 6, 2026";
@@ -26,7 +26,7 @@ export default function TermsPage() {
             </p>
 
             <p className="sx-terms-lede">
-              These Terms govern your use of strivianacademy.com (the &ldquo;Site&rdquo;)
+              These Terms govern your use of amullapudi.com (the &ldquo;Site&rdquo;)
               and any skills, files, or other materials we hand out. The Site is
               operated by{" "}
               <strong style={{ color: "var(--ink)" }}>Strivian LLC</strong>{" "}

@@ -16,9 +16,9 @@ export const SKILLS: Skill[] = [
   {
     id: "ai-website-business",
     title: "AI Website Business",
-    tagline: "One command. A full website business. Shipped.",
+    tagline: "One command. A demo site for every prospect. Shipped.",
     description:
-      "A Claude skill that researches local businesses, builds them a complete Next.js website from public signals, pushes it to GitHub, deploys it to Vercel, and logs everything to a file — all in one shot.",
+      "A Claude skill that finds local businesses without websites, builds each a stunning placeholder Next.js demo with zero scraped content (no real photos, names, or reviews — fully copyright-safe), deploys it to Vercel under a generic slug, and logs every lead to a CSV — all in one shot.",
     category: "Agents",
     readTime: "2 min setup",
     files: ["SKILL.md", "design-tokens.md"],
@@ -26,9 +26,9 @@ export const SKILLS: Skill[] = [
     available: true,
     features: [
       "Finds local businesses without websites via Google Maps",
-      "Generates tailored website to business",
-      "Generates bespoke Next.js sites with exceptional design",
-      "Auto-deploys to Vercel, logs leads to a CSV",
+      "Builds copyright-safe placeholder demos (no scraped photos, names, or reviews)",
+      "Bespoke Next.js designs varied by category — no two sites alike",
+      "Auto-deploys to Vercel under a generic slug; logs leads to a local CSV",
       "Cross-platform preflight (macOS, Linux, Windows)",
     ],
     glyph: "◈",
