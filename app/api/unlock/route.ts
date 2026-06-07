@@ -8,6 +8,7 @@ import { unsubscribeUrl } from "@/lib/unsubscribe";
 export const runtime = "nodejs";
 
 const FROM = "Abhi <abhi@amullapudi.com>";
+const REPLY_TO = "amullapudi.ai@gmail.com";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -72,6 +73,7 @@ export async function POST(req: Request) {
   try {
     const user = await resend.emails.send({
       from: FROM,
+      replyTo: REPLY_TO,
       to: cleanEmail,
       subject: subjectUser,
       html: htmlUser,
