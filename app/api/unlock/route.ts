@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   const unsubUrl = unsubscribeUrl(cleanEmail);
 
   const listUnsubscribeHeaders = {
-    "List-Unsubscribe": `<${unsubUrl}>, <mailto:abhi@amullapudi.com?subject=unsubscribe>`,
+    "List-Unsubscribe": `<${unsubUrl}>, <mailto:${REPLY_TO}?subject=unsubscribe>`,
     "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
   };
 
