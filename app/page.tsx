@@ -29,9 +29,9 @@ const YTGlyph = () => (
 );
 
 const SOCIALS = [
-  { label: "TikTok", href: "https://tiktok.com/@abhi_ai26", Icon: TikTokGlyph },
-  { label: "Instagram", href: "https://instagram.com/abhi_ai26", Icon: IGGlyph },
-  { label: "YouTube", href: "https://youtube.com/@abhi_ai26", Icon: YTGlyph },
+  { label: "TikTok", href: "https://tiktok.com/@abhibuilds1", Icon: TikTokGlyph },
+  { label: "Instagram", href: "https://instagram.com/abhibuilds1", Icon: IGGlyph },
+  { label: "YouTube", href: "https://youtube.com/@abhibuilds1yt", Icon: YTGlyph },
 ];
 
 export default function Home() {
@@ -44,7 +44,7 @@ export default function Home() {
             <span className="sx-logo-mark">
               <span className="sx-logo-mark-inner">@</span>
             </span>
-            <span className="sx-bio-name">abhi_ai26</span>
+            <span className="sx-bio-name">abhibuilds1</span>
           </div>
 
           <h1 className="sx-bio-title">real ai systems.</h1>
@@ -68,7 +68,7 @@ export default function Home() {
                   <Icon />
                 </a>
               ))}
-              <span className="sx-bio-handle">@abhi_ai26</span>
+              <span className="sx-bio-handle">@abhibuilds1</span>
             </div>
           </div>
 

@@ -4,9 +4,8 @@ import Footer from "@/components/Footer";
 import BackgroundCanvas from "@/components/BackgroundCanvas";
 
 export const metadata: Metadata = {
-  title: "Terms · @abhi_ai26",
-  description:
-    "Terms of use for amullapudi.com — operated by Strivian LLC.",
+  title: "Terms · @abhibuilds1",
+  description: "Terms of use for amullapudi.com.",
 };
 
 const LAST_UPDATED = "May 6, 2026";
@@ -26,13 +25,10 @@ export default function TermsPage() {
             </p>
 
             <p className="sx-terms-lede">
-              These Terms govern your use of amullapudi.com (the &ldquo;Site&rdquo;)
-              and any skills, files, or other materials we hand out. The Site is
-              operated by{" "}
-              <strong style={{ color: "var(--ink)" }}>Strivian LLC</strong>{" "}
-              (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;). By using
-              the Site or submitting your email to receive a skill, you accept
-              these Terms.
+              These are the terms of use for amullapudi.com (the
+              &ldquo;Site&rdquo;) and any skills, files, or other materials
+              made available here. By using the Site or submitting your email
+              to receive a skill, you agree to these terms.
             </p>
 
             <Section n="01" title="the skills are templates">
@@ -117,10 +113,11 @@ export default function TermsPage() {
             </Section>
 
             <Section n="07" title="limitation of liability">
-              To the maximum extent allowed by law, Strivian LLC is not liable
-              for any indirect, incidental, consequential, special, or punitive
-              damages arising out of or related to the Site or the skills. Our
-              total aggregate liability for any claim is limited to USD $50.
+              To the maximum extent allowed by law, the Site and its operator
+              are not liable for any indirect, incidental, consequential,
+              special, or punitive damages arising out of or related to the
+              Site or the skills. Total aggregate liability for any claim is
+              limited to USD $50.
             </Section>
 
             <Section n="08" title="changes">

@@ -26,7 +26,7 @@ export default function Nav({ page = "home" }: Props) {
           <span className="sx-logo-mark-inner">@</span>
         </span>
         <span className="sx-logo-text">
-          <span className="sx-logo-name">abhi_ai26</span>
+          <span className="sx-logo-name">abhibuilds1</span>
           <span className="sx-logo-sub">/ real ai systems</span>
         </span>
       </Link>

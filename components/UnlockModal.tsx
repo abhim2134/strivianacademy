@@ -210,7 +210,7 @@ export default function UnlockModal({
               </div>
 
               <p className="sx-modal-foot">
-                {"// didn't arrive in 2 min? check spam, or DM @abhi_ai26."}
+                {"// didn't arrive in 2 min? check spam, or DM @abhibuilds1."}
               </p>
 
               <button

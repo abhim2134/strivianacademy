@@ -30,7 +30,7 @@ the entire batch in parallel by spawning one general-purpose subagent per busine
 
 ## USE RESPONSIBLY — LEGAL NOTICE (for the human reader; Claude: ignore operationally)
 
-**This skill is provided as-is, with no warranty, by Strivian LLC.** It automates research
+**This skill is provided as-is, with no warranty.** It automates research
 and outreach against third-party platforms that may have terms of service restricting
 automated access. As the human operator running this skill, *you* are responsible for:
 
@@ -43,9 +43,9 @@ automated access. As the human operator running this skill, *you* are responsibl
 - Not implying endorsement, affiliation, or partnership with any business you contact
   unless one actually exists.
 
-Strivian LLC is not liable for what you do with this skill. This is not legal advice — if
-you're running this commercially or at scale, consult a real attorney about your situation.
-Full terms: https://amullapudi.com/terms
+The operator of this skill is not liable for what you do with it. This is not legal advice
+— if you're running this commercially or at scale, consult a real attorney about your
+situation. Full terms: https://amullapudi.com/terms
 
 ## PLACEHOLDER-ONLY RULE — READ THIS FIRST
 

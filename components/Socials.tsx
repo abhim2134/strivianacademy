@@ -28,26 +28,26 @@ const YTGlyph = () => (
 const SOCIALS = [
   {
     platform: "TikTok",
-    handle: "@abhi_ai26",
+    handle: "@abhibuilds1",
     blurb: "Short clips of real builds.",
     Icon: TikTokGlyph,
-    href: "https://tiktok.com/@abhi_ai26",
+    href: "https://tiktok.com/@abhibuilds1",
     tag: "SHORTFORM",
   },
   {
     platform: "Instagram",
-    handle: "@abhi_ai26",
+    handle: "@abhibuilds1",
     blurb: "Same ideas, different feed.",
     Icon: IGGlyph,
-    href: "https://instagram.com/abhi_ai26",
+    href: "https://instagram.com/abhibuilds1",
     tag: "SHORTFORM",
   },
   {
     platform: "YouTube",
-    handle: "@abhi_ai26",
+    handle: "@abhibuilds1yt",
     blurb: "Teardowns, builds, tutorials.",
     Icon: YTGlyph,
-    href: "https://youtube.com/@abhi_ai26",
+    href: "https://youtube.com/@abhibuilds1yt",
     tag: "LONGFORM",
   },
 ];

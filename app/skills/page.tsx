@@ -5,7 +5,7 @@ import SkillCard from "@/components/SkillCard";
 import { SKILLS } from "@/lib/skills";
 
 export const metadata: Metadata = {
-  title: "Free Claude Skills — @abhi_ai26",
+  title: "Free Claude Skills — @abhibuilds1",
   description:
     "Free, ready-to-install Claude skills built by a software engineer. Drop your email, get the files.",
 };
@@ -23,7 +23,7 @@ export default function SkillsPage() {
             <span className="sx-logo-mark">
               <span className="sx-logo-mark-inner">@</span>
             </span>
-            <span className="sx-bio-name">abhi_ai26</span>
+            <span className="sx-bio-name">abhibuilds1</span>
           </Link>
 
           <h1 className="sx-bio-title sx-bio-title-sm">free claude skills.</h1>

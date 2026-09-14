@@ -111,7 +111,7 @@ function renderUserEmail(title: string, fileCount: number, unsubUrl: string) {
   <div style="background:#0a0a0b;color:#f4f1ea;font-family:ui-sans-serif,system-ui,sans-serif;padding:32px 24px;max-width:600px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px">
       <span style="display:inline-block;width:8px;height:8px;background:#d4ff3a;border-radius:999px"></span>
-      <span style="font-weight:600">@abhi_ai26</span>
+      <span style="font-weight:600">@abhibuilds1</span>
     </div>
     <h1 style="font-size:32px;line-height:1.1;margin:0 0 8px 0;letter-spacing:-0.02em">
       ${title}
@@ -133,7 +133,7 @@ function renderUserEmail(title: string, fileCount: number, unsubUrl: string) {
 
     <p style="margin:24px 0 0 0;color:#9a9691;font-size:13px;line-height:1.6">
       Built by a software engineer. Not another prompt bro.<br/>
-      More free skills coming — follow <strong style="color:#f4f1ea">@abhi_ai26</strong> on Instagram, TikTok, and YouTube.
+      More free skills coming — follow <strong style="color:#f4f1ea">@abhibuilds1</strong> on Instagram, TikTok, and YouTube.
     </p>
 
     <hr style="border:none;border-top:1px solid rgba(244,241,234,0.08);margin:32px 0 16px 0" />

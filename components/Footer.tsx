@@ -20,9 +20,9 @@ export default function Footer() {
         <FooterCol
           title="Follow"
           items={[
-            { label: "TikTok", href: "https://tiktok.com/@abhi_ai26" },
-            { label: "Instagram", href: "https://instagram.com/abhi_ai26" },
-            { label: "YouTube", href: "https://youtube.com/@abhi_ai26" },
+            { label: "TikTok", href: "https://tiktok.com/@abhibuilds1" },
+            { label: "Instagram", href: "https://instagram.com/abhibuilds1" },
+            { label: "YouTube", href: "https://youtube.com/@abhibuilds1yt" },
           ]}
         />
         <FooterCol
@@ -35,7 +35,7 @@ export default function Footer() {
       <div className="sx-footer-base">
         <span>built by Abhi</span>
         <span>amullapudi.com</span>
-        <span>@abhi_ai26</span>
+        <span>@abhibuilds1</span>
       </div>
     </footer>
   );

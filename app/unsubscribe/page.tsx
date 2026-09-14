@@ -7,7 +7,7 @@ import { verifyUnsubscribeToken } from "@/lib/unsubscribe";
 import { unsubscribeContact } from "@/lib/audience";
 
 export const metadata: Metadata = {
-  title: "Unsubscribed · @abhi_ai26",
+  title: "Unsubscribed · @abhibuilds1",
   robots: { index: false, follow: false },
 };
 
@@ -60,7 +60,7 @@ export default async function UnsubscribePage({
                     {shownEmail}
                   </span>{" "}
                   has been removed from the list. You won&apos;t receive any
-                  more drops from @abhi_ai26.
+                  more drops from @abhibuilds1.
                 </p>
                 <p
                   className="sx-mono"
