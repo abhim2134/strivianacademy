@@ -1,55 +1,11 @@
 import type { Metadata } from "next";
-import {
-  Instrument_Serif,
-  Space_Grotesk,
-  JetBrains_Mono,
-  Inter,
-} from "next/font/google";
 import "./globals.css";
-
-const instrument = Instrument_Serif({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-ui",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const inter = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://amullapudi.com"),
-  title: "@abhibuilds1 — real ai systems with Claude",
+  title: "Abhi Mullapudi",
   description:
-    "Free systems built by a software engineer using Claude — not another prompt bro.",
-  openGraph: {
-    title: "@abhibuilds1",
-    description:
-      "Real AI systems with Claude. Free skills from a software engineer.",
-    type: "website",
-    url: "https://amullapudi.com",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "@abhibuilds1",
-    description:
-      "Real AI systems with Claude. Free skills from a software engineer.",
-  },
+    "Software engineer exploring the use cases of ai agents and unique ways to use them.",
 };
 
 export default function RootLayout({
@@ -58,11 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      data-mode="dark"
-      className={`${instrument.variable} ${spaceGrotesk.variable} ${inter.variable} ${jetbrains.variable}`}
-    >
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
