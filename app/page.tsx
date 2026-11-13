@@ -1,6 +1,5 @@
 import BackgroundCanvas from "@/components/BackgroundCanvas";
-import FeaturedSkill from "@/components/FeaturedSkill";
-import { SKILLS } from "@/lib/skills";
+import Link from "next/link";
 
 const TikTokGlyph = () => (
   <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden>
@@ -63,9 +62,12 @@ export default function Home() {
             </div>
           </div>
 
-          {SKILLS.filter((s) => s.available).map((skill) => (
-            <FeaturedSkill key={skill.id} skill={skill} />
-          ))}
+          <Link href="/skills" className="sx-btn sx-bio-skills-btn">
+            <span>
+              <span className="sx-bio-skills-kicker">New</span> Free Claude skills
+            </span>
+            <span>→</span>
+          </Link>
 
           <p className="sx-bio-sub">
             About me: I&apos;m a software engineer who enjoys exploring the use

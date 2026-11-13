@@ -70,7 +70,7 @@ export default async function UnsubscribePage({
                 >
                   Changed your mind?{" "}
                   <Link
-                    href="/"
+                    href="/skills"
                     style={{
                       color: "var(--neon-1)",
                       textDecoration: "underline",

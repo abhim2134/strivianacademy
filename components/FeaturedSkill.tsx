@@ -12,7 +12,7 @@ export default function FeaturedSkill({ skill }: { skill: Skill }) {
     <>
       <section id={skill.id} className="sx-bio-skill" aria-labelledby={`${skill.id}-title`}>
         <div className="sx-bio-skill-top">
-          <span className="sx-bio-skill-badge">Free Claude skill</span>
+          <span className="sx-bio-skill-badge">Free</span>
           <span className="sx-bio-skill-glyph" aria-hidden>
             {skill.glyph}
           </span>

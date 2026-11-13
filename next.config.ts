@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/download": ["./content/skills/*.zip"],
   },
-  // Old video descriptions link to /skills; send them to the skill on the home page.
-  async redirects() {
-    return [{ source: "/skills", destination: "/#local-ai-setup", permanent: false }];
-  },
 };
 
 export default nextConfig;
