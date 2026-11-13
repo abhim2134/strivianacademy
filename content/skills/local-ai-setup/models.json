@@ -1,0 +1,24 @@
+{
+  "checked": "2026-11-11",
+  "source": "https://ollama.com/library (sizes are the default 4-bit downloads)",
+  "how_to_pick": "Compute the memory budget (see SKILL.md), then take the FIRST tier whose min_budget_gb <= budget. min_budget_gb is the model PLUS its context, not the download size. CPU-only machines use cpu_only instead.",
+  "tiers": [
+    {"min_budget_gb": 96, "model": "qwen3.5:122b", "size_gb": 81, "context": 64000, "good_for": "Biggest local model here: long context, harder reasoning", "example": "Mac with 128 GB"},
+    {"min_budget_gb": 34, "model": "qwen3.6:35b", "size_gb": 23, "context": 64000, "good_for": "Strong all-rounder for agents and coding", "example": "Mac with 64 GB"},
+    {"min_budget_gb": 23, "model": "qwen3.8:27b", "size_gb": 18, "context": 64000, "good_for": "Best local coding and agent work", "example": "RTX 4090 (24 GB)"},
+    {"min_budget_gb": 10, "model": "qwen3.5:9b", "size_gb": 7, "context": 64000, "good_for": "Chat, automations, and Claude Code on small tasks", "example": "Mac with 16-32 GB, RTX 5070 (12 GB)"},
+    {"min_budget_gb": 5, "model": "qwen3.5:4b", "size_gb": 4, "context": 32000, "good_for": "Explain code, short summaries, tagging", "example": "6-8 GB GPUs"},
+    {"min_budget_gb": 0, "model": "qwen3.5:2b", "size_gb": 3, "context": 8000, "good_for": "Short summaries and tagging; slow", "example": "Old laptops"}
+  ],
+  "cpu_only": [
+    {"min_ram_gb": 16, "model": "qwen3.5:4b", "size_gb": 4, "context": 8000, "good_for": "Short tasks; expect a few words per second"},
+    {"min_ram_gb": 0, "model": "qwen3.5:2b", "size_gb": 3, "context": 8000, "good_for": "Short summaries and tagging; slow"}
+  ],
+  "agent_ready": ["qwen3.5:122b", "qwen3.6:35b", "qwen3.8:27b", "qwen3.5:9b"],
+  "measured": [
+    {"date": "2026-11-11", "machine": "M1 Pro, 32 GB, Ollama 0.40.16", "model": "qwen3.5:9b @ 64k", "memory_gb": 9.6, "processor": "100% GPU (MLX)", "tokens_per_s": 22.6, "claude_code_first_reply_s": 180, "note": "Answered the test prompt correctly"},
+    {"date": "2026-11-11", "machine": "M1 Pro, 32 GB, Ollama 0.40.16", "model": "devstral-small-2 @ 64k", "memory_gb": 25, "processor": "8%/92% CPU/GPU (llama.cpp)", "tokens_per_s": 7.0, "note": "Does not fit at 64k on a 32 GB Mac"},
+    {"date": "2026-11-11", "machine": "M1 Pro, 32 GB, Ollama 0.40.16", "model": "devstral-small-2 @ 32k", "processor": "100% GPU (llama.cpp)", "tokens_per_s": 8.7, "claude_code_first_reply_s": 724, "note": "Claude Code's ~27k-token first prompt read at ~50 tokens/s; later turns ~14 s thanks to caching"}
+  ],
+  "notes": "Qwen 3.5-3.8 need little extra memory for context (64k added ~2-3 GB to the 9B); models with full attention, like Devstral Small 2 (64k added ~10 GB), need much more. On Apple Silicon, Ollama runs supported Qwen and Gemma models on MLX, which was ~2.6x faster here. Claude Code and other agents need 64k+ context, so only agent_ready models are offered for that."
+}

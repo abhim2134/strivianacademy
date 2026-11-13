@@ -6,7 +6,8 @@
     "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "zip-skills": "sh scripts/zip-skills.sh"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.11.1",
