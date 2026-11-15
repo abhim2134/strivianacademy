@@ -1,6 +1,6 @@
 ---
 name: local-ai-setup
-description: Set up and tour local AI on this computer (macOS, Windows or Linux) with Ollama, end to end. Checks the hardware, picks the best model it can run, installs and tests it, then shows what it can do - Claude Code on the local model, web search through MCP, the desktop app, reading images, the local API for automations, and private file search. Use when the user wants to run AI locally, set up Ollama, find out which model their computer can run, or use Claude Code with a local model.
+description: Set up and tour local AI on this computer (macOS, Windows or Linux) with Ollama, end to end. Checks the hardware, picks the best model it can run, installs and tests it, then shows what it can do - Claude Code on the local model, free web search through MCP (Exa by default, or any service with your own key), the desktop app, reading images, the local API for automations, and private file search. Use when the user wants to run AI locally, set up Ollama, find out which model their computer can run, or use Claude Code with a local model.
 ---
 
 # Local AI setup
@@ -11,7 +11,8 @@ Take the user from nothing installed to a tested local model, then tour what it 
 
 - **Ask before you change anything.** Reading the hardware is fine. Before installing software, downloading a model or changing settings, say what and how big, and wait for a yes.
 - **Never open, read or index the user's own files.** Every demo uses the sample files that ship with this skill (`assets/`, `demo-notes/`). Only touch a folder of theirs if they name it and ask.
-- **Never handle passwords or API keys.** If a step needs one, tell the user where to enter it themselves.
+- **Never handle passwords.** If a step needs one, tell the user where to enter it themselves.
+- **API keys only for web search, and only the user's own.** Prefer that they set the key as an environment variable themselves (B2). If they paste one into the chat, use it only in the setup command; never repeat it, print it, or write it into a file of your own.
 - **This skill's folder** is `SKILL_DIR` below: the folder containing this file (usually `~/.claude/skills/local-ai-setup`).
 
 ## Platform notes
@@ -93,12 +94,29 @@ Only for `agent_ready` models with 64k context.
 The model is the brain; tools let it act. Explain in one line each:
 
 1. **Files and terminal:** built into Claude Code. Nothing to set up.
-2. **Web search:** Claude Code's built-in web search runs on Anthropic's servers, so it doesn't work on a local model. Ollama's web search does, as an MCP server. It needs a free Ollama account. Ask before each step:
-   1. The user creates an API key at https://ollama.com/settings/keys and stores it themselves as the `OLLAMA_API_KEY` environment variable (macOS/Linux: add `export OLLAMA_API_KEY=...` to their shell profile; Windows: `setx OLLAMA_API_KEY "..."` in their own terminal). Never ask them to paste the key into the chat.
-   2. If `uv --version` fails, install uv. macOS/Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`. Windows: `powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm https://astral.sh/uv/install.ps1 | iex"`.
-   3. Download Ollama's official server script: `mkdir -p ~/.local-ai-setup && curl -fsSL https://raw.githubusercontent.com/ollama/ollama-python/main/examples/web-search-mcp.py -o ~/.local-ai-setup/web-search-mcp.py`
-   4. Register it with Claude Code. macOS/Linux: `claude mcp add --scope user ollama-web-search -- uv run "$HOME/.local-ai-setup/web-search-mcp.py"`. Windows: `claude mcp add --scope user ollama-web-search -- uv run "$(cygpath -w ~/.local-ai-setup/web-search-mcp.py)"`.
-   5. The user restarts Claude Code (so it sees the new key), then `ollama launch claude --model <name>` and asks something current, like "Search the web for today's top AI news and summarize it."
+2. **Web search:** Claude Code's built-in web search runs on Anthropic's servers, so it doesn't work on a local model. A search service connected as an MCP server does. Tell the user plainly: the model stays on their computer, but **search queries go to the search service.**
+
+   **Default: Exa, free, no account, no key.** Offer this first:
+   ```sh
+   claude mcp add --transport http --scope user exa https://mcp.exa.ai/mcp
+   ```
+   It gives the model `web_search_exa` (search) and `web_fetch_exa` (read a page). The keyless tier has a free rate limit Exa doesn't publish; fine for normal use. It needs an IPv4 connection: if searches fail with 403, add a free Exa key (below).
+
+   **Bring your own key** (higher limits, or a service the user prefers). Ask which service, then get the key in one of two ways and let the user choose:
+   - **Recommended: they set it themselves**, so it never appears in the chat. macOS/Linux: they add `export <VAR>=<key>` to their shell profile (`~/.zshrc` or `~/.bashrc`) and restart Claude Code. Windows: they run `setx <VAR> "<key>"` in their own terminal and restart Claude Code. Then the commands below read it with `$<VAR>`.
+   - **Or they paste it here.** Say first that it will stay in this chat's history and be saved in Claude Code's MCP settings on this computer. Put it straight into the command; never repeat it back, print it, or save it anywhere else.
+
+   | Service | Variable | Command |
+   |---|---|---|
+   | Exa (free key: $10/month credits, no card) | `EXA_API_KEY` | `claude mcp add --transport http --scope user exa https://mcp.exa.ai/mcp --header "x-api-key: $EXA_API_KEY"` |
+   | Tavily (1,000 free credits/month, no card) | `TAVILY_API_KEY` | `claude mcp add --transport http --scope user tavily "https://mcp.tavily.com/mcp/?tavilyApiKey=$TAVILY_API_KEY"` |
+   | Firecrawl (1,000 free credits/month; best for reading whole sites) | `FIRECRAWL_API_KEY` | `claude mcp add --transport http --scope user firecrawl https://mcp.firecrawl.dev/v2/mcp --header "Authorization: Bearer $FIRECRAWL_API_KEY"` |
+   | Brave Search (needs a card; needs Node.js) | `BRAVE_API_KEY` | `claude mcp add --scope user brave-search -e BRAVE_API_KEY="$BRAVE_API_KEY" -- npx -y @brave/brave-search-mcp-server` |
+   | Ollama web search (free Ollama account; needs `uv`) | `OLLAMA_API_KEY` | `claude mcp add --scope user ollama-web-search -e OLLAMA_API_KEY="$OLLAMA_API_KEY" -- uv run "$HOME/.local-ai-setup/web-search-mcp.py"`, after downloading the script with `mkdir -p ~/.local-ai-setup && curl -fsSL https://raw.githubusercontent.com/ollama/ollama-python/main/examples/web-search-mcp.py -o ~/.local-ai-setup/web-search-mcp.py` (Windows: pass the path through `cygpath -w`) |
+
+   **Any other service** (Perplexity, SerpAPI, Jina...): ask the user for the link to its MCP setup page, read it, and add it the same way: an HTTP URL with a key header, or a local command with `-e <VAR>=...`.
+
+   Replacing a server: `claude mcp remove <name> --scope user` first. Check it with `claude mcp get <name>` (should say Connected), then test: the user runs `ollama launch claude --model <name>` in a new terminal and asks something current, like "Search the web for this week's top AI news and summarize it."
 3. **Other MCP servers** (GitHub, Notion, Google Sheets...) plug in the same way with `claude mcp add`. `claude mcp list` shows what's connected.
 
 ### B3. Desktop app
@@ -146,5 +164,5 @@ End with a short card: computer, model + size, context, measured speed, GPU fit,
 - **macOS:** quit Ollama, then delete `/Applications/Ollama.app`, `~/.ollama` (models), `~/Library/Application Support/Ollama`, `~/Library/Saved Application State/com.electron.ollama.savedState`, `~/Library/Caches/com.electron.ollama`, `~/Library/Caches/ollama`, `~/Library/WebKit/com.electron.ollama`. The user removes `/usr/local/bin/ollama` with `sudo rm` (it's owned by the system).
 - **Windows:** Settings → Apps → Ollama → Uninstall; models are in `%USERPROFILE%\.ollama`.
 - **Linux:** see https://docs.ollama.com/linux#uninstall
-- Web search: `claude mcp remove ollama-web-search --scope user` and delete `~/.local-ai-setup`.
+- Web search: `claude mcp remove <name> --scope user` (for example `exa`); if Ollama search was set up, also delete `~/.local-ai-setup`.
 - One model: `ollama rm <name>`.

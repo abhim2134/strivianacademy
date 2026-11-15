@@ -22,7 +22,7 @@ export const SKILLS: Skill[] = [
     features: [
       "Reads your RAM, GPU and disk (Mac, Windows, Linux)",
       "Picks a model that fits, installs it, tests the speed",
-      "Runs Claude Code on it, with web search via MCP",
+      "Runs Claude Code on it, with free web search (no key needed)",
       "Desktop app, image reading, local API for automations",
       "Private file search, demoed on sample notes",
     ],
