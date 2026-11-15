@@ -5,6 +5,14 @@ set -u
 
 OS=$(uname -s)
 ARCH=$(uname -m)
+
+# Claude Code on Windows runs commands in Git Bash, where uname says MINGW/MSYS.
+# Hand off to the PowerShell version, which can read Windows hardware.
+case "$OS" in
+  MINGW*|MSYS*|CYGWIN*)
+    exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cd "$(dirname "$0")" && pwd -W 2>/dev/null || pwd)/detect.ps1"
+    ;;
+esac
 CHIP=""
 RAM_GB=0
 GPU="none"

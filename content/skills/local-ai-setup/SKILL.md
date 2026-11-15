@@ -1,93 +1,150 @@
 ---
 name: local-ai-setup
-description: Check this computer (macOS, Windows or Linux), pick the best local AI model it can run, and set it up with Ollama end to end - install, download, context length, speed test, and optionally Claude Code on the local model. Use when the user wants to run AI locally, set up Ollama, find out which model their computer can run, or use Claude Code with a local model.
+description: Set up and tour local AI on this computer (macOS, Windows or Linux) with Ollama, end to end. Checks the hardware, picks the best model it can run, installs and tests it, then shows what it can do - Claude Code on the local model, web search through MCP, the desktop app, reading images, the local API for automations, and private file search. Use when the user wants to run AI locally, set up Ollama, find out which model their computer can run, or use Claude Code with a local model.
 ---
 
 # Local AI setup
 
-Get the user from "nothing installed" to a local model that is tested and ready, in this order. Keep messages short and plain; the user may not be technical.
+Take the user from nothing installed to a tested local model, then tour what it can do. Part A sets it up. Part B shows it off, one feature at a time. Keep messages short and plain; the user may not be technical, and they may be recording a video, so narrate each step in one line before you run it.
 
-**Ask before you change anything.** Steps 1-2 only read. Before step 3, show what you will install and download (sizes included) and wait for a yes.
+## Ground rules
 
-## 1. Check the computer
+- **Ask before you change anything.** Reading the hardware is fine. Before installing software, downloading a model or changing settings, say what and how big, and wait for a yes.
+- **Never open, read or index the user's own files.** Every demo uses the sample files that ship with this skill (`assets/`, `demo-notes/`). Only touch a folder of theirs if they name it and ask.
+- **Never handle passwords or API keys.** If a step needs one, tell the user where to enter it themselves.
+- **This skill's folder** is `SKILL_DIR` below: the folder containing this file (usually `~/.claude/skills/local-ai-setup`).
 
-Run the detector from this skill's folder. It prints one JSON line and changes nothing.
+## Platform notes
 
-- macOS / Linux: `sh scripts/detect.sh`
-- Windows (PowerShell): `powershell -ExecutionPolicy Bypass -File scripts\detect.ps1`
+- **Windows:** Claude Code runs commands in Git Bash. Run `.ps1` files with `powershell.exe -NoProfile -ExecutionPolicy Bypass -File <path>`. Right after installing, `ollama` may not be on PATH in this session; use `"$LOCALAPPDATA/Programs/Ollama/ollama.exe"` until Claude Code restarts. To hand a Git Bash path to a Windows program, convert it with `cygpath -w <path>`.
+- **macOS / Linux:** plain `sh` and `python3`.
+- Below, `ollama` means the command, or that full path when it isn't on PATH yet.
 
-If a value comes back empty or 0 when it shouldn't (for example a gaming PC reporting no GPU), check by hand (`nvidia-smi`, Task Manager → Performance → GPU) before you pick.
+---
 
-## 2. Pick the model
+## Part A: set it up
 
-Work out the **memory budget**, the memory the model can use:
+### A1. Check the computer
+
+`sh "$SKILL_DIR/scripts/detect.sh"` on every OS (on Windows it hands off to `detect.ps1` itself). It prints one JSON line and changes nothing. If a value looks wrong (for example a gaming PC with no GPU), check by hand (`nvidia-smi`, Task Manager → Performance → GPU) before picking.
+
+### A2. Pick the model
+
+Memory budget, the memory the model can use:
 
 | Detected | Budget |
 |---|---|
-| `unified_memory: true` (Apple Silicon Mac) | `ram_gb × 0.67` up to 36 GB of RAM, `ram_gb × 0.75` above that (macOS keeps the rest for the system) |
+| `unified_memory: true` (Apple Silicon) | `ram_gb × 0.67` up to 36 GB of RAM, `ram_gb × 0.75` above that |
 | `gpu` is `nvidia` or `amd`, `gpu_vram_gb` ≥ 4 | `gpu_vram_gb` |
-| anything else (Intel Mac, integrated graphics, no GPU) | CPU only: use the `cpu_only` list by `ram_gb` |
+| anything else (Intel Mac, integrated graphics, no GPU) | CPU only: the `cpu_only` list by `ram_gb` |
 
-Then read `models.json` and take the **first** tier whose `min_budget_gb` ≤ budget. Also check `disk_free_gb` ≥ `size_gb` + 5; if not, drop a tier or tell the user how much space to free.
+Take the **first** tier in `models.json` whose `min_budget_gb` ≤ budget (that number already includes room for context). Check `disk_free_gb` ≥ `size_gb` + 5. Tell the user in 3-4 lines: what their computer has, the pick and its download size, what it's good for, and one alternative.
 
-Tell the user, in 3-4 lines: what their computer has, the budget, the pick and its download size, what it is good for, and one alternative (the next tier down: faster, less capable). If the user wants to use Claude Code or another coding agent, the pick must be in `agent_ready`; if their budget can't fit one, say so plainly and suggest chat and automations instead.
-
-## 3. Install Ollama (skip if `ollama` is already set)
-
-Official installers only:
+### A3. Install Ollama (skip if `ollama --version` works)
 
 - **macOS / Linux:** `curl -fsSL https://ollama.com/install.sh | sh`
-- **Windows (PowerShell, no admin needed):** `irm https://ollama.com/install.ps1 | iex`
+- **Windows:** `powershell.exe -NoProfile -Command "irm https://ollama.com/install.ps1 | iex"` (no admin needed; installs silently)
 
-Notes:
-- **macOS:** the script puts `Ollama.app` in /Applications, then links the `ollama` command into `/usr/local/bin`. If that folder needs a password (`test -w /usr/local/bin` fails) and you can't enter one, the script stops at the link step after the app is already installed. Then start it with `open -a Ollama --args hidden`. On first launch the app shows its own prompt to install the command-line tool; tell the user to accept it and enter their Mac password, and `ollama` works from then on. Until then (or if they decline), use the full path `/Applications/Ollama.app/Contents/Resources/ollama`.
-- **Linux:** the script uses `sudo` and sets up a systemd service. If you can't enter a password, give the user the command to run in their own terminal and wait.
-- Needs macOS 14+, Windows 10 22H2+ (NVIDIA driver 551.61+), or a recent Linux with current GPU drivers.
+Then:
+- **macOS:** the script installs the app, then tries to link the `ollama` command into `/usr/local/bin`, which can need a password. If it stops there, start the app with `open /Applications/Ollama.app --args hidden` (the full path: `open -a Ollama` can fail right after install, before macOS has registered the app). The app shows its own prompt to install the command-line tool: tell the user to accept it and enter their Mac password. Until then use `/Applications/Ollama.app/Contents/Resources/ollama`.
+- **Linux:** the script needs `sudo`. If you can't enter a password, give the user the command to run in their own terminal and wait.
+- **Windows:** if the server doesn't answer within a minute, start it with `"$LOCALAPPDATA/Programs/Ollama/ollama app.exe" &`.
 
-Wait until the server answers: `curl -s http://localhost:11434/api/version` (Windows: `irm http://localhost:11434/api/version`).
+Wait until `curl -s http://localhost:11434/api/version` answers.
 
-## 4. Download the model
+### A4. Download the model
 
-`ollama pull <model>`. Large downloads take a while: run it in the background, and give the user the size and a rough progress update instead of waiting silently.
+`ollama pull <model>`. Run it in the background for big downloads and give the user the size and rough progress.
 
-## 5. Set the context length
+### A5. Set the context length
 
-Ollama's default context is small (4k below 24 GB of GPU memory), which makes agents look broken. Make a copy of the model with the tier's `context` built in. This works the same on every OS, survives restarts and needs no settings change:
+Ollama's default context is small (4k below 24 GB of GPU memory), which makes agents look broken. Make a copy with the tier's context built in; this works the same on every OS and survives restarts:
 
+```sh
+printf 'FROM <model>\nPARAMETER num_ctx <context>\n' > Modelfile
+ollama create <name> -f Modelfile && rm Modelfile
 ```
-FROM <model>
-PARAMETER num_ctx <context>
-```
 
-Save that as a file named `Modelfile` in a temp folder, then `ollama create <name> -f Modelfile`, where `<name>` is the model with `:` replaced by `-` plus the context, e.g. `devstral-small-2-64k`, `qwen3.5-9b-32k`.
+`<name>` = the model with `:` replaced by `-`, plus the context: `qwen3.5-9b-64k`, `qwen3.8-27b-64k`. Use this name from here on.
 
-## 6. Test it
+### A6. Test it
 
-1. `ollama run <name> "In one sentence, what is 17 x 23?" --verbose` and read `eval rate` (tokens per second).
-2. `ollama ps` while it is loaded: `PROCESSOR` should say `100% GPU` on GPU machines and `CONTEXT` should match. A CPU/GPU split means it doesn't fit: drop one tier, or halve the context, and test again.
+1. `ollama run <name> "In one sentence, what is 17 x 23?" --verbose --think=false` and read `eval rate` (tokens per second).
+2. `ollama ps`: `PROCESSOR` should say `100% GPU` on GPU machines and `CONTEXT` should match. A CPU/GPU split means it doesn't fit: drop a tier or halve the context and test again.
 
-Rough guide for the user: 20+ tokens/s feels quick, 8-20 is usable, under 5 is slow.
+Guide: 20+ tokens/s feels quick, 8-20 is usable, under 5 is slow. `ollama ps` SIZE is the real memory use; context can add a lot on some models (`models.json` → `measured`).
 
-Context costs memory on top of the download: `ollama ps` SIZE is the real number. Qwen models add a few GB for 64k; others (Devstral, for example) can add ~10 GB. `models.json` → `measured` has real results from a 32 GB M1 Pro.
+Then offer Part B: list B1-B6 in one line each and ask which to do (default: all, in order).
 
-## 7. Optional: Claude Code on the local model
+---
 
-Only for `agent_ready` models with 64k context. Warn the user that the **first** reply is slow: Claude Code sends about 27k tokens of instructions up front (3 minutes with Qwen3.5 9B on a 32 GB M1 Pro). Later replies reuse that and come much faster.
+## Part B: what it can do
 
-- Easiest, interactive (the user runs it): `ollama launch claude`, then pick `<name>`.
-- One-off check you can run yourself:
-  `ANTHROPIC_AUTH_TOKEN=ollama ANTHROPIC_BASE_URL=http://localhost:11434 ANTHROPIC_API_KEY="" claude -p "Reply with OK" --model <name>`
-  (PowerShell: set `$env:ANTHROPIC_AUTH_TOKEN="ollama"`, `$env:ANTHROPIC_BASE_URL="http://localhost:11434"`, `$env:ANTHROPIC_API_KEY=""` first.)
+### B1. Claude Code on the local model
 
-Claude Code's built-in web search runs on Anthropic's servers, so it won't work on a local model. For web search, Ollama has an MCP server (free Ollama account): https://docs.ollama.com/capabilities/web-search
+Only for `agent_ready` models with 64k context.
 
-## 8. Report
+- Quick check you can run yourself: `ollama launch claude --model <name> --yes -- -p "Reply with just the word OK."`
+- Warn first: the **first** reply is slow, because Claude Code sends about 27k tokens of instructions up front (3 minutes with Qwen3.5 9B on a 32 GB M1 Pro). Later replies reuse them and are much faster.
+- To use it for real, the user opens a new terminal and runs `ollama launch claude --model <name>`. That starts an interactive Claude Code session whose brain is the local model.
 
-End with a short card: computer, model + size, context, measured speed, GPU fit, and the two commands they'll use most (`ollama run <name>`, and `ollama launch claude` if set up). Add one line on removing it (below).
+### B2. Give it hands
+
+The model is the brain; tools let it act. Explain in one line each:
+
+1. **Files and terminal:** built into Claude Code. Nothing to set up.
+2. **Web search:** Claude Code's built-in web search runs on Anthropic's servers, so it doesn't work on a local model. Ollama's web search does, as an MCP server. It needs a free Ollama account. Ask before each step:
+   1. The user creates an API key at https://ollama.com/settings/keys and stores it themselves as the `OLLAMA_API_KEY` environment variable (macOS/Linux: add `export OLLAMA_API_KEY=...` to their shell profile; Windows: `setx OLLAMA_API_KEY "..."` in their own terminal). Never ask them to paste the key into the chat.
+   2. If `uv --version` fails, install uv. macOS/Linux: `curl -LsSf https://astral.sh/uv/install.sh | sh`. Windows: `powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm https://astral.sh/uv/install.ps1 | iex"`.
+   3. Download Ollama's official server script: `mkdir -p ~/.local-ai-setup && curl -fsSL https://raw.githubusercontent.com/ollama/ollama-python/main/examples/web-search-mcp.py -o ~/.local-ai-setup/web-search-mcp.py`
+   4. Register it with Claude Code. macOS/Linux: `claude mcp add --scope user ollama-web-search -- uv run "$HOME/.local-ai-setup/web-search-mcp.py"`. Windows: `claude mcp add --scope user ollama-web-search -- uv run "$(cygpath -w ~/.local-ai-setup/web-search-mcp.py)"`.
+   5. The user restarts Claude Code (so it sees the new key), then `ollama launch claude --model <name>` and asks something current, like "Search the web for today's top AI news and summarize it."
+3. **Other MCP servers** (GitHub, Notion, Google Sheets...) plug in the same way with `claude mcp add`. `claude mcp list` shows what's connected.
+
+### B3. Desktop app
+
+- **macOS:** `open /Applications/Ollama.app`. **Windows:** `"$LOCALAPPDATA/Programs/Ollama/ollama app.exe" &`. Both open Ollama's chat window: pick `<name>` in the model menu and chat like ChatGPT, fully offline. Its settings also have a context-length slider.
+- **Linux:** Ollama has no desktop app; say so, and skip unless the user wants a browser UI (Open WebUI, which needs Docker).
+
+### B4. Show it an image
+
+Models in `models.json` read images. Use the sample chart, never a screenshot of the user's screen:
+
+`ollama run <name> "$SKILL_DIR/assets/sample-chart.png" "What does this chart show, and which month stands out?" --think=false`
+
+(On Windows pass the path through `cygpath -w`.) The chart shows coffee-shop sales rising from 820 cups in January to 1,420 in June, with June highlighted, so you can check the answer.
+
+### B5. The local API (for apps and automations)
+
+Ollama serves an API at `http://localhost:11434` that scripts, n8n, Zapier-style tools and your own apps can call like any AI API, for free.
+
+- macOS / Linux: `sh "$SKILL_DIR/scripts/api-demo.sh" <name>`
+- Windows: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$SKILL_DIR/scripts/api-demo.ps1")" <name>`
+
+Point out the answer in the JSON's `message.content`. There's also an OpenAI-compatible endpoint at `http://localhost:11434/v1` for tools that expect OpenAI's format.
+
+### B6. Private file search
+
+Search notes by meaning, fully offline. **Demo on the sample notes only.**
+
+1. `ollama pull embeddinggemma` (622 MB).
+2. Copy the samples into a fresh folder in the current directory: `cp -R "$SKILL_DIR/demo-notes" ./local-ai-demo`
+3. Search:
+   - macOS / Linux: `python3 "$SKILL_DIR/scripts/search.py" ./local-ai-demo "Which client was worried about customers missing pickups?"`
+   - Windows: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(cygpath -w "$SKILL_DIR/scripts/search.ps1")" "$(cygpath -w ./local-ai-demo)" "Which client was worried about customers missing pickups?"`
+
+The bakery note should rank first even though it never says "worried" or "missing". Then mention they can point the same script at a folder of their own notes whenever they choose. Don't do it for them unless they name the folder.
+
+---
+
+## Report
+
+End with a short card: computer, model + size, context, measured speed, GPU fit, which Part B steps are set up, and the commands they'll use most (`ollama run <name>`, `ollama launch claude --model <name>`). Add one line on removing it.
 
 ## Removing it
 
-- **macOS:** quit Ollama, then delete `/Applications/Ollama.app`, `/usr/local/bin/ollama` (if linked), `~/.ollama` (models), `~/Library/Application Support/Ollama`, `~/Library/Saved Application State/com.electron.ollama.savedState`, `~/Library/Caches/com.electron.ollama`, `~/Library/Caches/ollama`, `~/Library/WebKit/com.electron.ollama`.
+- **macOS:** quit Ollama, then delete `/Applications/Ollama.app`, `~/.ollama` (models), `~/Library/Application Support/Ollama`, `~/Library/Saved Application State/com.electron.ollama.savedState`, `~/Library/Caches/com.electron.ollama`, `~/Library/Caches/ollama`, `~/Library/WebKit/com.electron.ollama`. The user removes `/usr/local/bin/ollama` with `sudo rm` (it's owned by the system).
 - **Windows:** Settings → Apps → Ollama → Uninstall; models are in `%USERPROFILE%\.ollama`.
 - **Linux:** see https://docs.ollama.com/linux#uninstall
-- Just one model: `ollama rm <name>`.
+- Web search: `claude mcp remove ollama-web-search --scope user` and delete `~/.local-ai-setup`.
+- One model: `ollama rm <name>`.
