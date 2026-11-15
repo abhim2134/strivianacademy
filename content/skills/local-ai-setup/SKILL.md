@@ -5,7 +5,7 @@ description: Set up and tour local AI on this computer (macOS, Windows or Linux)
 
 # Local AI setup
 
-Take the user from nothing installed to a tested local model, then tour what it can do. Part A sets it up. Part B shows it off, one feature at a time. Keep messages short and plain; the user may not be technical, and they may be recording a video, so narrate each step in one line before you run it.
+Take the user from nothing installed to a tested local model, then tour what it can do. Part A sets it up. Part B shows it off, one feature at a time. Keep messages short and plain; the user may not be technical, so say what each step does in one line before you run it.
 
 ## Ground rules
 
@@ -85,7 +85,7 @@ Then offer Part B: list B1-B6 in one line each and ask which to do (default: all
 Only for `agent_ready` models with 64k context.
 
 - Quick check you can run yourself: `ollama launch claude --model <name> --yes -- -p "Reply with just the word OK."`
-- Warn first: the **first** reply is slow, because Claude Code sends about 27k tokens of instructions up front (3 minutes with Qwen3.5 9B on a 32 GB M1 Pro). Later replies reuse them and are much faster.
+- Warn first: the **first** reply is slow, because Claude Code sends about 27k tokens of instructions up front (about 2-3 minutes with Qwen3.5 9B on a 32 GB M1 Pro test machine). Later replies reuse them and are much faster.
 - To use it for real, the user opens a new terminal and runs `ollama launch claude --model <name>`. That starts an interactive Claude Code session whose brain is the local model.
 
 ### B2. Give it hands
