@@ -4,7 +4,9 @@ Checks your computer (Mac, Windows or Linux), picks the best local AI model it c
 
 ## Install
 
-Copy this `local-ai-setup` folder into your Claude skills folder:
+Easiest: open Claude Code and say "Install the Claude skill in ~/Downloads/local-ai-setup.zip, then set up local AI on my computer." Claude unzips it, puts it in your skills folder and runs it.
+
+Or by hand: copy this `local-ai-setup` folder into your Claude skills folder:
 
 - Claude Code: `~/.claude/skills/` (Windows: `%USERPROFILE%\.claude\skills\`)
 

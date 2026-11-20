@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { getSkill, type Skill } from "@/lib/skills";
+import { getSkill, installPrompt, type Skill } from "@/lib/skills";
 import { addContactToAudience } from "@/lib/audience";
 import { downloadUrl, unsubscribeUrl } from "@/lib/unsubscribe";
 
@@ -77,7 +77,6 @@ export async function POST(req: Request) {
 }
 
 function renderUserEmail(skill: Skill, dlUrl: string, unsubUrl: string) {
-  const folder = skill.zip.replace(/\.zip$/, "");
   return `
   <div style="background:#0a0a0b;color:#f4f1ea;font-family:ui-sans-serif,system-ui,sans-serif;padding:32px 24px;max-width:600px;margin:0 auto">
     <div style="margin-bottom:24px;font-weight:600">${HANDLE}</div>
@@ -89,12 +88,11 @@ function renderUserEmail(skill: Skill, dlUrl: string, unsubUrl: string) {
     <div style="background:#121214;border:1px solid rgba(244,241,234,0.08);border-radius:12px;padding:20px;margin:0 0 24px 0">
       <p style="margin:0 0 12px 0;font-weight:600">How to install it</p>
       <ol style="margin:0;padding-left:20px;color:#d4d0c7;font-size:14px;line-height:1.7">
-        <li>Unzip it. You get a folder named <code style="color:#ffcc00">${folder}</code>.</li>
-        <li>Move that folder into <code style="color:#ffcc00">~/.claude/skills/</code> (Windows: <code style="color:#ffcc00">%USERPROFILE%\\.claude\\skills\\</code>).</li>
-        <li>Open a new Claude Code session and say:</li>
+        <li>Download the zip above. It saves to your Downloads folder as <code style="color:#ffcc00">${skill.zip}</code>.</li>
+        <li>Open Claude Code and paste this (change the path if you saved it somewhere else):</li>
       </ol>
-      <pre style="background:#0a0a0b;border:1px solid rgba(244,241,234,0.08);border-radius:8px;padding:14px;font-size:13px;color:#ffcc00;margin:12px 0 0 0;white-space:pre-wrap">${skill.prompt}</pre>
-      <p style="margin:12px 0 0 0;color:#9a9691;font-size:13px;line-height:1.6">It checks your computer first and asks before installing anything.</p>
+      <pre style="background:#0a0a0b;border:1px solid rgba(244,241,234,0.08);border-radius:8px;padding:14px;font-size:13px;color:#ffcc00;margin:12px 0 0 0;white-space:pre-wrap">${installPrompt(skill)}</pre>
+      <p style="margin:12px 0 0 0;color:#9a9691;font-size:13px;line-height:1.6">Claude unzips it, installs the skill and runs it. It checks your computer first and asks before installing anything.</p>
     </div>
 
     <p style="margin:24px 0 0 0;color:#9a9691;font-size:13px;line-height:1.6">

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import type { Skill } from "@/lib/skills";
+import { installPrompt, type Skill } from "@/lib/skills";
 
 type State =
   | { kind: "form" }
@@ -201,10 +201,10 @@ export default function UnlockModal({
                     lineHeight: 1.55,
                   }}
                 >
-                  Unzip it, move the folder into ~/.claude/skills/, then open
-                  a new Claude Code session and say:
+                  Once the zip downloads, open Claude Code and paste this
+                  (change the path if you saved it somewhere else):
                 </p>
-                <pre className="sx-modal-code">{skill.prompt}</pre>
+                <pre className="sx-modal-code">{installPrompt(skill)}</pre>
                 <p
                   style={{
                     margin: "10px 0 0",
@@ -213,8 +213,8 @@ export default function UnlockModal({
                     lineHeight: 1.55,
                   }}
                 >
-                  It checks your computer first and asks before installing
-                  anything.
+                  Claude unzips it, installs the skill and runs it. It checks
+                  your computer first and asks before installing anything.
                 </p>
               </div>
 

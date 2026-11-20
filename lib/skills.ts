@@ -31,6 +31,12 @@ export const SKILLS: Skill[] = [
   },
 ];
 
+/** One line to paste into Claude Code: it installs the downloaded zip, then runs the skill. */
+export function installPrompt(skill: Skill): string {
+  const then = skill.prompt.charAt(0).toLowerCase() + skill.prompt.slice(1);
+  return `Install the Claude skill in ~/Downloads/${skill.zip}, then ${then}`;
+}
+
 export function getSkill(id: string): Skill | undefined {
   return SKILLS.find((s) => s.id === id);
 }
