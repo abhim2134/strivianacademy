@@ -31,10 +31,10 @@ export const SKILLS: Skill[] = [
   },
 ];
 
-/** One line to paste into Claude Code: it installs the downloaded zip, then runs the skill. */
+/** One line to paste into Claude Code: it finds the downloaded zip, installs it and runs the skill. No path, so it works on Mac, Windows and Linux. */
 export function installPrompt(skill: Skill): string {
   const then = skill.prompt.charAt(0).toLowerCase() + skill.prompt.slice(1);
-  return `Install the Claude skill in ~/Downloads/${skill.zip}, then ${then}`;
+  return `Install the Claude skill ${skill.zip} from my Downloads folder, then ${then}`;
 }
 
 export function getSkill(id: string): Skill | undefined {

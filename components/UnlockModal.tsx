@@ -201,8 +201,8 @@ export default function UnlockModal({
                     lineHeight: 1.55,
                   }}
                 >
-                  Once the zip downloads, open Claude Code and paste this
-                  (change the path if you saved it somewhere else):
+                  Once the zip downloads, open Claude Code (Mac, Windows or
+                  Linux) and paste this. Saved it somewhere else? Just say where:
                 </p>
                 <pre className="sx-modal-code">{installPrompt(skill)}</pre>
                 <p
