@@ -70,8 +70,10 @@ export default function Home() {
           </Link>
 
           <p className="sx-bio-sub">
-            About me: I&apos;m a software engineer who enjoys exploring the use
-            cases of ai agents and finding unique ways to use them.
+            About me: I am a software engineer who builds and shares for free
+            real AI workflows for creators, businesses, and AI operators. I
+            also talk about the builder mindset and unique and proven ways to
+            think when building to save time and money with AI
           </p>
 
           <div className="sx-bio-foot">All views presented are my own.</div>
